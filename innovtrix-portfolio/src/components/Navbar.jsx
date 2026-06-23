@@ -35,7 +35,7 @@ export default function Navbar() {
     { name: 'Home', path: '/' },
     { name: 'About', path: '/about' },
     { name: 'Services', path: '/services' },
-    { name: 'Portfolio', path: '/portfolio' },
+    { name: 'Client Projects', path: '/portfolio' },
     { name: 'Pricing', path: '/pricing' },
     { name: 'FAQ', path: '/faq' },
     { name: 'Contact', path: '/contact' }
@@ -56,10 +56,10 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
-          <span className="text-2xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent font-sans tracking-wide">
-            INNOVTRIX
+          <span className="text-2xl font-black text-slate-900 dark:text-white font-sans tracking-tight">
+            INNOVTRIX<span className="text-brand-primary">.</span>
           </span>
-          <span className="text-xs px-2 py-0.5 bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-full font-medium">
+          <span className="text-xs px-2 py-0.5 bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-full font-bold">
             Studio
           </span>
         </Link>

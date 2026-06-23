@@ -84,56 +84,57 @@ export default function Pricing() {
   ]
 
   return (
-    <div className="font-sans">
+    <div className="font-sans bg-black text-slate-100 min-h-screen bg-grid-pattern">
       {/* Page Header */}
-      <section className="bg-slate-950 py-20 px-6 relative border-b border-white/5">
-        <div className="glow-bg bg-brand-primary top-0 right-10"></div>
+      <section className="bg-black py-28 px-6 relative border-b border-white/10">
+        <div className="glow-bg bg-brand-primary/20 top-0 right-10"></div>
         <div className="max-w-4xl mx-auto text-center z-10 relative">
-          <span className="text-xs font-semibold text-brand-primary uppercase tracking-wider">PROJECT PRICING</span>
-          <h1 className="text-4xl md:text-6xl font-bold text-white mt-4 tracking-tight">
-            Clear, Value-Driven Pricing
+          <span className="text-xs font-black text-brand-primary uppercase tracking-widest bg-brand-primary/10 border border-brand-primary/20 px-4 py-1.5 rounded-full">PROJECT PRICING</span>
+          <h1 className="text-4xl md:text-7xl font-black text-white mt-8 tracking-tight uppercase leading-[1.1]">
+            Clear, Value-Driven <br />
+            <span className="text-transparent [-webkit-text-stroke:1.5px_white]">Pricing Plans</span>
           </h1>
-          <p className="text-slate-400 text-lg mt-6 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-slate-400 text-lg md:text-xl mt-8 max-w-2xl mx-auto leading-relaxed">
             Select a package suited to your current operational needs. We construct clean, secure storefronts and commercial websites.
           </p>
         </div>
       </section>
 
       {/* Pricing Cards Grid */}
-      <section className="py-24 bg-slate-950 px-6">
+      <section className="py-32 bg-black px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {plans.map((plan, idx) => (
               <div 
                 key={idx}
-                className={`glass-card p-8 border-white/5 hover:border-brand-primary/20 transition-all flex flex-col justify-between relative ${
-                  plan.popular ? 'border-brand-primary/30 shadow-glow bg-slate-900/60' : 'bg-slate-900/30'
+                className={`glass-card p-8 border hover:border-brand-primary/30 hover:shadow-glow transition-all duration-300 flex flex-col justify-between relative ${
+                  plan.popular ? 'border-brand-primary/40 shadow-glow bg-black/90' : 'border-white/5 bg-zinc-900/10'
                 }`}
                 data-aos="fade-up"
                 data-aos-delay={idx * 150}
               >
                 {plan.popular && (
-                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-brand-primary text-white text-[10px] font-bold uppercase tracking-wider rounded-full shadow-glow">
+                  <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 bg-brand-primary text-black text-[10px] font-black uppercase tracking-widest rounded-full shadow-glow">
                     Most Popular
                   </span>
                 )}
                 
                 <div>
-                  <h3 className="text-lg font-bold text-white mb-1">{plan.name}</h3>
-                  <p className="text-[10px] text-slate-500 mb-6 font-semibold uppercase tracking-wider">
+                  <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">{plan.name}</h3>
+                  <p className="text-[10px] text-slate-500 mb-6 font-bold uppercase tracking-wider">
                     Suitable for: {plan.suitable}
                   </p>
                   
-                  <div className="flex items-baseline mb-2">
-                    <span className="text-2xl font-bold text-white">{plan.price}</span>
+                  <div className="flex items-baseline mb-3">
+                    <span className="text-2xl sm:text-3xl font-black text-white">{plan.price}</span>
                     <span className="text-slate-500 text-xs ml-2">/ {plan.period}</span>
                   </div>
                   
-                  <p className="text-xs font-semibold text-brand-primary mb-6">
+                  <p className="text-xs font-bold text-brand-primary mb-6 uppercase tracking-wider">
                     Delivery Timeline: {plan.delivery}
                   </p>
                   
-                  <div className="h-px bg-white/5 mb-6"></div>
+                  <div className="h-px bg-white/10 mb-6"></div>
 
                   <ul className="space-y-4 mb-8">
                     {plan.features.map((feat, i) => (
@@ -147,8 +148,8 @@ export default function Pricing() {
 
                 <button 
                   onClick={() => navigate('/contact')}
-                  className={`w-full py-3.5 text-xs font-bold uppercase tracking-wider ${
-                    plan.popular ? 'btn-primary' : 'btn-secondary'
+                  className={`w-full py-3.5 text-xs font-black uppercase tracking-widest transition-all duration-300 ${
+                    plan.popular ? 'btn-primary' : 'btn-secondary bg-zinc-900 border-zinc-800 text-white hover:bg-brand-primary hover:text-black hover:border-brand-primary'
                   }`}
                 >
                   Request Proposal
@@ -160,20 +161,20 @@ export default function Pricing() {
       </section>
 
       {/* Factors Affecting Cost */}
-      <section className="py-24 bg-slate-900 border-t border-white/5 px-6">
+      <section className="py-28 bg-zinc-950 border-t border-white/10 px-6 bg-grid-pattern">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-xs font-bold text-brand-primary uppercase tracking-widest">VARIABLE FACTORS</span>
-            <h2 className="text-3xl font-bold text-white mt-2">What Affects Project Cost?</h2>
+          <div className="text-center mb-20">
+            <span className="text-xs font-black text-brand-primary uppercase tracking-widest">VARIABLE FACTORS</span>
+            <h2 className="text-3xl md:text-5xl font-black text-white mt-4 uppercase">What Affects Project Cost?</h2>
           </div>
 
           <div className="space-y-6">
             {factors.map((f, idx) => (
-              <div key={idx} className="glass-card p-6 border-white/5 flex items-start space-x-4 bg-slate-950/40">
+              <div key={idx} className="glass-card p-6 border-white/5 flex items-start space-x-4 bg-zinc-900/10 hover:border-brand-primary/20 transition-all duration-300">
                 <FiInfo className="text-brand-primary text-xl mt-0.5 flex-shrink-0" />
                 <div>
-                  <h4 className="text-white font-bold text-sm mb-1">{idx + 1}. {f.title}</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">{f.desc}</p>
+                  <h4 className="text-white font-black text-sm mb-1.5 uppercase tracking-wide">{idx + 1}. {f.title}</h4>
+                  <p className="text-slate-400 text-xs leading-relaxed font-medium">{f.desc}</p>
                 </div>
               </div>
             ))}
@@ -182,26 +183,27 @@ export default function Pricing() {
       </section>
 
       {/* Additional Charges Table */}
-      <section className="py-24 bg-slate-950 border-t border-white/5 px-6">
+      <section className="py-28 bg-black border-t border-white/10 px-6 relative bg-grid-pattern">
+        <div className="glow-bg bg-brand-primary/10 bottom-10 left-10"></div>
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <span className="text-xs font-bold text-brand-primary uppercase tracking-widest">ANNUAL & RECURRING COSTS</span>
-            <h2 className="text-3xl font-bold text-white mt-2">Additional Charges</h2>
+          <div className="text-center mb-20">
+            <span className="text-xs font-black text-brand-primary uppercase tracking-widest">ANNUAL & RECURRING COSTS</span>
+            <h2 className="text-3xl md:text-5xl font-black text-white mt-4 uppercase">Additional Charges</h2>
           </div>
 
-          <div className="table-container">
-            <table className="admin-table">
+          <div className="overflow-hidden border border-white/10 rounded-2xl bg-zinc-950/40">
+            <table className="w-full text-left border-collapse">
               <thead>
-                <tr>
-                  <th className="px-6 py-4">Service Category</th>
-                  <th className="px-6 py-4 text-right">Estimated Cost Range</th>
+                <tr className="bg-zinc-900 border-b border-white/10 text-xs font-black uppercase text-slate-400 tracking-wider">
+                  <th className="px-6 py-5">Service Category</th>
+                  <th className="px-6 py-5 text-right">Estimated Cost Range</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5">
                 {additionalCharges.map((ac, idx) => (
                   <tr key={idx} className="hover:bg-white/5 transition-colors">
-                    <td className="px-6 py-4 text-xs font-semibold text-slate-300">{ac.service}</td>
-                    <td className="px-6 py-4 text-xs font-bold text-white text-right">{ac.cost}</td>
+                    <td className="px-6 py-5 text-xs font-bold text-slate-300">{ac.service}</td>
+                    <td className="px-6 py-5 text-xs font-black text-brand-primary text-right">{ac.cost}</td>
                   </tr>
                 ))}
               </tbody>

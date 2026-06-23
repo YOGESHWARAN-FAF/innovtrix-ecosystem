@@ -151,9 +151,9 @@ export default function DashboardOverview() {
       {
         label: 'Monthly Revenue (₹)',
         data: monthlyRevenueData,
-        backgroundColor: 'rgba(59, 130, 246, 0.8)',
-        borderColor: '#3B82F6',
-        borderWidth: 1,
+        backgroundColor: 'rgba(255, 186, 0, 0.25)',
+        borderColor: '#FFBA00',
+        borderWidth: 1.5,
         borderRadius: 6
       }
     ]
@@ -165,7 +165,7 @@ export default function DashboardOverview() {
     datasets: [
       {
         data: buildsDistribution,
-        backgroundColor: ['#3B82F6', '#06B6D4'],
+        backgroundColor: ['#FFBA00', '#FACC15'],
         borderWidth: 0
       }
     ]
@@ -211,7 +211,7 @@ export default function DashboardOverview() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {/* Metric 1 */}
         <div className="dash-card flex items-center space-x-4">
-          <div className="p-3 bg-blue-500/10 text-blue-500 border border-blue-500/20 rounded-xl">
+          <div className="p-3 bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-xl">
             <FiUsers size={22} />
           </div>
           <div>
@@ -222,7 +222,7 @@ export default function DashboardOverview() {
 
         {/* Metric 2 */}
         <div className="dash-card flex items-center space-x-4">
-          <div className="p-3 bg-cyan-500/10 text-cyan-500 border border-cyan-500/20 rounded-xl">
+          <div className="p-3 bg-brand-accent/10 text-brand-accent border border-brand-accent/20 rounded-xl">
             <FiShoppingBag size={22} />
           </div>
           <div>
@@ -233,7 +233,7 @@ export default function DashboardOverview() {
 
         {/* Metric 3 */}
         <div className="dash-card flex items-center space-x-4">
-          <div className="p-3 bg-indigo-500/10 text-indigo-500 border border-indigo-500/20 rounded-xl">
+          <div className="p-3 bg-white/5 text-white border border-white/10 rounded-xl">
             <FiLayers size={22} />
           </div>
           <div>

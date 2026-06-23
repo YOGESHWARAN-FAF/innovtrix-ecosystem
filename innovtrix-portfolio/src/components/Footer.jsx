@@ -28,8 +28,8 @@ export default function Footer() {
         {/* About Innovtrix */}
         <div>
           <Link to="/" className="flex items-center space-x-2 mb-6">
-            <span className="text-2xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent tracking-wide">
-              INNOVTRIX
+            <span className="text-2xl font-black text-white font-sans tracking-tight">
+              INNOVTRIX<span className="text-brand-primary">.</span>
             </span>
           </Link>
           <p className="text-slate-400 text-sm leading-relaxed mb-6">
