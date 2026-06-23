@@ -77,7 +77,7 @@ export default function Login({ onLoginSuccess }) {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="innovtrix30@gmail.com"
+              placeholder="Enter your email"
               required
               className="dash-input"
             />
