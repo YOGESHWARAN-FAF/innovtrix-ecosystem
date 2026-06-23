@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { NavLink, Link, useNavigate } from 'react-router-dom'
+import { NavLink, Link, useNavigate, useLocation } from 'react-router-dom'
 import { HiMenu, HiX } from 'react-icons/hi'
 import { FiSun, FiMoon } from 'react-icons/fi'
 
@@ -8,6 +8,7 @@ export default function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(true)
   const [scrolled, setScrolled] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
 
   useEffect(() => {
     const root = window.document.documentElement
@@ -43,13 +44,16 @@ export default function Navbar() {
   const activeStyle = "text-brand-primary font-semibold"
   const inactiveStyle = "text-slate-600 dark:text-slate-300 hover:text-brand-primary dark:hover:text-brand-primary transition-colors"
 
+  const isHome = location.pathname === '/'
+  const showBackground = scrolled || !isHome || isOpen
+
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'py-4 backdrop-blur-md bg-brand-light/80 dark:bg-brand-dark/80 border-b border-slate-200/50 dark:border-white/10 shadow-sm' 
+    <nav className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+      showBackground 
+        ? 'py-4 backdrop-blur-md bg-brand-light/95 dark:bg-brand-dark/95 border-b border-slate-200/50 dark:border-white/10 shadow-sm' 
         : 'py-6 bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
         {/* Logo */}
         <Link to="/" className="flex items-center space-x-2">
           <span className="text-2xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent font-sans tracking-wide">

@@ -1,4 +1,5 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { FaWhatsapp } from 'react-icons/fa'
 
 // Components
@@ -16,9 +17,25 @@ import Contact from './pages/Contact'
 import Legal from './pages/Legal'
 import NotFound from './pages/NotFound'
 
+// Scroll restoration component
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true })
+    } else {
+      window.scrollTo(0, 0)
+    }
+  }, [pathname])
+
+  return null
+}
+
 export default function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="flex flex-col min-h-screen text-slate-800 dark:text-slate-100 bg-brand-light dark:bg-brand-dark transition-colors duration-300">
         
         {/* Navigation */}
