@@ -35,8 +35,8 @@ def seed_database():
     try:
         # 1. Seed Admin
         admin_email = "innovtrix30@gmail.com"
-        exists = db.query(models.Admin).filter(models.Admin.email == admin_email).first()
-        if not exists:
+        admin = db.query(models.Admin).filter(models.Admin.email == admin_email).first()
+        if not admin:
             db_admin = models.Admin(
                 email=admin_email,
                 password_hash=auth.get_password_hash("@Innovtrix30"),
@@ -45,6 +45,10 @@ def seed_database():
             db.add(db_admin)
             db.commit()
             print("Seeded default admin credentials successfully.")
+        else:
+            admin.password_hash = auth.get_password_hash("@Innovtrix30")
+            db.commit()
+            print("Forced update of default admin credentials successfully.")
 
         # 2. Seed Services
         if db.query(models.Service).count() == 0:
