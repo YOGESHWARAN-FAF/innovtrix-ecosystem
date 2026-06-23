@@ -19,6 +19,7 @@ import Settings from './pages/Settings'
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [checkingAuth, setCheckingAuth] = useState(true)
+  const [sidebarOpen, setSidebarOpen] = useState(false)
 
   useEffect(() => {
     const token = localStorage.getItem('admin_token')
@@ -48,19 +49,27 @@ export default function App() {
 
   return (
     <Router>
-      <div className="flex bg-slate-950 min-h-screen font-sans">
+      <div className="flex bg-slate-950 min-h-screen font-sans overflow-x-hidden">
         
+        {/* Mobile Sidebar Backdrop Overlay */}
+        {sidebarOpen && (
+          <div 
+            className="fixed inset-0 z-40 bg-slate-950/60 lg:hidden"
+            onClick={() => setSidebarOpen(false)}
+          ></div>
+        )}
+
         {/* Persistent Sidebar */}
-        <Sidebar />
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
 
         {/* Dashboard Content Container */}
         <div className="flex-grow flex flex-col min-w-0">
           
           {/* Header */}
-          <Header onLogout={handleLogout} />
+          <Header onLogout={handleLogout} onToggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
 
           {/* Module Views */}
-          <main className="p-8 flex-grow">
+          <main className="p-4 sm:p-6 lg:p-8 flex-grow">
             <Routes>
               <Route path="/" element={<DashboardOverview />} />
               <Route path="/leads" element={<Leads />} />

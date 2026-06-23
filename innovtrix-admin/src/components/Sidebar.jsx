@@ -1,10 +1,10 @@
 import { NavLink } from 'react-router-dom'
 import { 
   FiHome, FiBriefcase, FiDollarSign, FiMail, FiLayers, FiSettings, 
-  FiShoppingBag, FiUsers, FiFileText, FiStar, FiGrid 
+  FiShoppingBag, FiUsers, FiFileText, FiStar, FiGrid, FiX
 } from 'react-icons/fi'
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }) {
   const menuGroups = [
     {
       title: 'Overview',
@@ -40,9 +40,11 @@ export default function Sidebar() {
   const inactiveStyle = "hover:bg-white/5 border-l-2 border-transparent text-slate-400 hover:text-white"
 
   return (
-    <aside className="w-64 bg-slate-900 border-r border-white/5 flex flex-col min-h-screen sticky top-0 font-sans">
+    <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-white/5 flex flex-col min-h-screen transition-transform duration-200 ease-in-out transform lg:translate-x-0 lg:static lg:block ${
+      isOpen ? 'translate-x-0' : '-translate-x-full'
+    } font-sans`}>
       {/* Brand Logo */}
-      <div className="p-6 border-b border-white/5">
+      <div className="p-6 border-b border-white/5 flex items-center justify-between">
         <div className="flex items-center space-x-2">
           <span className="text-xl font-bold bg-gradient-to-r from-brand-primary to-brand-secondary bg-clip-text text-transparent tracking-wider">
             INNOVTRIX
@@ -51,6 +53,13 @@ export default function Sidebar() {
             Admin
           </span>
         </div>
+        <button 
+          onClick={onClose}
+          className="lg:hidden text-slate-400 hover:text-white p-1 hover:bg-white/5 rounded-lg transition-colors"
+          aria-label="Close Sidebar"
+        >
+          <FiX size={20} />
+        </button>
       </div>
 
       {/* Navigation Group items */}
@@ -65,6 +74,7 @@ export default function Sidebar() {
                 <NavLink
                   key={itemIdx}
                   to={item.path}
+                  onClick={onClose}
                   className={({ isActive }) => `flex items-center space-x-3 px-4 py-3 rounded-lg text-sm transition-all duration-200 ${
                     isActive ? activeStyle : inactiveStyle
                   }`}
@@ -80,3 +90,4 @@ export default function Sidebar() {
     </aside>
   )
 }
+

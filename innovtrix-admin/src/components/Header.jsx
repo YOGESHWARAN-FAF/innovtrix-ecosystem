@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { FiBell, FiSearch, FiLogOut, FiUser } from 'react-icons/fi'
+import { FiBell, FiSearch, FiLogOut, FiUser, FiMenu } from 'react-icons/fi'
 
-export default function Header({ onLogout }) {
+export default function Header({ onLogout, onToggleSidebar }) {
   const [adminEmail, setAdminEmail] = useState('innovtrix30@gmail.com')
   const [notifications, setNotifications] = useState([
     { id: 1, text: 'New E-Commerce quote request from Silk & Thread', read: false },
@@ -23,20 +23,31 @@ export default function Header({ onLogout }) {
   const unreadCount = notifications.filter(n => !n.read).length
 
   return (
-    <header className="h-20 bg-slate-900 border-b border-white/5 flex items-center justify-between px-8 sticky top-0 z-30 font-sans">
+    <header className="h-20 bg-slate-900 border-b border-white/5 flex items-center justify-between px-4 sm:px-8 sticky top-0 z-30 font-sans">
       
-      {/* Search Bar */}
-      <div className="relative w-72">
-        <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" />
-        <input
-          type="text"
-          placeholder="Search leads, projects, orders..."
-          className="w-full pl-10 pr-4 py-2 bg-slate-950/60 border border-white/10 rounded-xl text-xs placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-primary"
-        />
+      {/* Left section: Toggle Sidebar and Search Bar */}
+      <div className="flex items-center">
+        <button
+          onClick={onToggleSidebar}
+          className="lg:hidden text-slate-400 hover:text-white p-2.5 rounded-xl bg-slate-950/40 hover:bg-slate-800 border border-white/5 transition-colors mr-3 cursor-pointer flex items-center justify-center"
+          aria-label="Toggle Sidebar"
+        >
+          <FiMenu size={18} />
+        </button>
+
+        {/* Search Bar */}
+        <div className="relative hidden sm:block w-48 md:w-72">
+          <FiSearch className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-500 text-sm" />
+          <input
+            type="text"
+            placeholder="Search leads, projects, orders..."
+            className="w-full pl-10 pr-4 py-2 bg-slate-950/60 border border-white/10 rounded-xl text-xs placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-primary"
+          />
+        </div>
       </div>
 
       {/* Action Tools */}
-      <div className="flex items-center space-x-6">
+      <div className="flex items-center space-x-4 sm:space-x-6">
         
         {/* Notifications Icon & Panel */}
         <div className="relative">
@@ -76,7 +87,7 @@ export default function Header({ onLogout }) {
         </div>
 
         {/* User Profile */}
-        <div className="flex items-center space-x-3 border-l border-white/5 pl-6">
+        <div className="flex items-center space-x-3 border-l border-white/5 pl-4 sm:pl-6">
           <div className="p-2 bg-slate-950/60 rounded-full text-slate-400 border border-white/5">
             <FiUser size={16} />
           </div>
@@ -99,3 +110,4 @@ export default function Header({ onLogout }) {
     </header>
   )
 }
+
