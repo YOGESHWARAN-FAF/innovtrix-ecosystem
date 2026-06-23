@@ -1,0 +1,61 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans bg-slate-950 text-slate-100 min-h-screen transition-colors duration-300;
+  }
+  
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-950;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-800 rounded-full hover:bg-brand-primary;
+  }
+}
+
+@layer components {
+  /* Dashboard glass cards */
+  .dash-card {
+    @apply backdrop-blur-md bg-slate-900/60 border border-white/5 shadow-glass-dark rounded-xl p-6;
+  }
+  
+  .dash-input {
+    @apply px-4 py-2.5 bg-slate-950 border border-white/10 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-brand-primary focus:border-transparent text-sm w-full transition-all;
+  }
+
+  .btn-primary {
+    @apply px-5 py-2.5 bg-brand-primary hover:bg-brand-primary/95 text-white text-sm font-semibold rounded-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer;
+  }
+
+  .btn-secondary {
+    @apply px-5 py-2.5 bg-slate-800 hover:bg-slate-700/80 border border-white/5 text-slate-300 text-sm font-medium rounded-xl active:scale-95 transition-all flex items-center justify-center gap-2 cursor-pointer;
+  }
+
+  /* Table styling classes */
+  .table-container {
+    @apply overflow-x-auto w-full border border-white/5 rounded-xl bg-slate-900/40;
+  }
+  
+  .admin-table {
+    @apply min-w-full divide-y divide-white/5 text-left text-sm;
+  }
+  
+  .admin-table th {
+    @apply px-6 py-4 text-xs font-semibold uppercase tracking-wider text-slate-400 bg-slate-900/80;
+  }
+  
+  .admin-table td {
+    @apply px-6 py-4 text-slate-300 border-t border-white/5;
+  }
+  
+  .badge {
+    @apply px-2.5 py-0.5 rounded-full text-xs font-semibold inline-flex items-center;
+  }
+}

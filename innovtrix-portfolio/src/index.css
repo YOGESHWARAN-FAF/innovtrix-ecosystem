@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+@layer base {
+  body {
+    @apply font-sans transition-colors duration-300;
+  }
+  
+  /* Custom scrollbar for premium feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-slate-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-700 rounded-full hover:bg-brand-primary;
+  }
+}
+
+@layer components {
+  /* Glassmorphism Cards */
+  .glass-card {
+    @apply backdrop-blur-md bg-white/10 dark:bg-slate-900/40 border border-white/10 dark:border-white/5 shadow-glass-light dark:shadow-glass-dark rounded-2xl;
+  }
+  
+  .glass-card-hover {
+    @apply transition-all duration-300 hover:shadow-glow hover:-translate-y-1 hover:border-brand-primary/30;
+  }
+
+  /* Glass Input */
+  .glass-input {
+    @apply w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl text-slate-800 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-transparent transition-all duration-200;
+  }
+  
+  /* Premium Buttons */
+  .btn-primary {
+    @apply px-6 py-3 bg-gradient-to-r from-brand-primary to-brand-secondary text-white font-medium rounded-xl shadow-glow hover:opacity-90 active:scale-95 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2;
+  }
+  
+  .btn-secondary {
+    @apply px-6 py-3 bg-slate-800/80 hover:bg-slate-700/80 border border-white/10 text-white font-medium rounded-xl hover:-translate-y-0.5 active:scale-95 transition-all duration-200 cursor-pointer flex items-center justify-center gap-2;
+  }
+
+  /* Glowing background patterns */
+  .glow-bg {
+    @apply absolute w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none opacity-20 dark:opacity-30;
+  }
+}
+
+/* Custom styles for Swiper pagination */
+.swiper-pagination-bullet-active {
+  @apply bg-brand-primary !important;
+}
+
+/* Smooth Lenis Scrolling */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overflow: clip;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
