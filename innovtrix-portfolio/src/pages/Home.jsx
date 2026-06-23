@@ -205,23 +205,23 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-6 -mx-6 px-6 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 scrollbar-none" data-aos="fade-left">
-            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all min-w-[70vw] sm:min-w-0 snap-align-start flex-shrink-0">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6" data-aos="fade-left">
+            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all">
               <FiGlobe className="text-brand-primary text-2xl mb-3" />
               <h3 className="text-white font-bold text-sm mb-1.5">Premium Website Development</h3>
               <p className="text-slate-400 text-xs leading-relaxed">Modern, responsive, and high-performance websites designed to help businesses grow and create a strong online presence.</p>
             </div>
-            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all min-w-[70vw] sm:min-w-0 snap-align-start flex-shrink-0">
+            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all">
               <FiShoppingBag className="text-brand-primary text-2xl mb-3" />
               <h3 className="text-white font-bold text-sm mb-1.5">E-Commerce Solutions</h3>
               <p className="text-slate-400 text-xs leading-relaxed">Secure online stores with product management, payment gateways, shopping carts, and seamless customer experiences.</p>
             </div>
-            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all min-w-[70vw] sm:min-w-0 snap-align-start flex-shrink-0">
+            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all">
               <FiSmartphone className="text-brand-primary text-2xl mb-3" />
               <h3 className="text-white font-bold text-sm mb-1.5">Mobile App Development</h3>
               <p className="text-slate-400 text-xs leading-relaxed">Custom Android and iOS applications with intuitive interfaces, high performance, and scalable architecture.</p>
             </div>
-            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all min-w-[70vw] sm:min-w-0 snap-align-start flex-shrink-0">
+            <div className="glass-card p-5 sm:p-6 border-white/5 bg-slate-900/20 hover:border-brand-primary/20 transition-all">
               <FiCpu className="text-brand-primary text-2xl mb-3" />
               <h3 className="text-white font-bold text-sm mb-1.5">Electronics & IoT Projects</h3>
               <p className="text-slate-400 text-xs leading-relaxed">Innovative electronics, IoT systems, embedded solutions, and custom hardware prototypes for students, startups, and industries.</p>
@@ -239,12 +239,12 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Specialized Web Services</h2>
           </div>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-6 -mx-6 px-6 lg:mx-0 lg:px-0 lg:grid lg:grid-cols-2 scrollbar-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {coreServices.map((service, index) => (
               <div 
                 key={index}
                 data-aos={index === 0 ? "fade-right" : "fade-left"}
-                className="glass-card p-5 sm:p-8 lg:p-12 hover:border-brand-primary/20 transition-all flex flex-col justify-between min-w-[72vw] sm:min-w-[400px] lg:min-w-0 snap-align-start flex-shrink-0"
+                className="glass-card p-5 sm:p-8 lg:p-12 hover:border-brand-primary/20 transition-all flex flex-col justify-between"
               >
                 <div>
                   <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 sm:mb-4">{service.title}</h3>
@@ -252,8 +252,8 @@ export default function Home() {
                   
                   <ul className="space-y-2 sm:space-y-3 mb-5 sm:mb-8">
                     {service.features.map((feat, idx) => (
-                      <li key={idx} className="flex items-center space-x-3 text-slate-300">
-                        <span className="w-1.5 h-1.5 bg-brand-primary rounded-full"></span>
+                      <li key={idx} className="flex items-start space-x-3 text-slate-300">
+                        <span className="w-1.5 h-1.5 bg-brand-primary rounded-full mt-2 flex-shrink-0"></span>
                         <span className="text-sm">{feat}</span>
                       </li>
                     ))}
@@ -300,13 +300,13 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-8 pb-6 -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-3 scrollbar-none">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {selectedProjects.map((project, index) => (
               <div 
                 key={index}
                 data-aos="fade-up"
                 data-aos-delay={index * 150}
-                className="glass-card overflow-hidden hover:border-brand-primary/20 transition-all group min-w-[72vw] sm:min-w-[340px] md:min-w-0 snap-align-start flex-shrink-0"
+                className="glass-card overflow-hidden hover:border-brand-primary/20 transition-all group"
               >
                 <div className="relative h-44 sm:h-60 overflow-hidden">
                   <img 
@@ -347,7 +347,7 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-white mt-2">Web Development Pricing</h2>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {plans.map((plan, idx) => (
               <div 
                 key={idx}
