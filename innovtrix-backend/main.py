@@ -51,11 +51,22 @@ def seed_database():
             print("Forced update of default admin credentials successfully.")
 
         # 2. Seed Services
-        if db.query(models.Service).count() == 0:
-            s1 = models.Service(name="E-Commerce Website Development", description="Scalable e-retail setups", base_price=5999.0)
-            s2 = models.Service(name="Commercial Website Development", description="Corporate business sites & portfolios", base_price=2499.0)
-            db.add_all([s1, s2])
-            db.commit()
+        services_to_seed = [
+            ("Business & Commercial Websites", "Premium corporate and professional service sites", 2499.0),
+            ("Industry-Specific Websites", "Tailored solutions for gyms, schools, hospitals, etc.", 2999.0),
+            ("E-Commerce Development", "High-performance online stores and marketplaces", 5999.0),
+            ("SaaS Application Development", "Custom SaaS platforms and client subscription portals", 6999.0),
+            ("IoT Applications & Smart Solutions", "Real-time hardware monitoring and data dashboards", 7999.0),
+            ("Cloud Deployment & Monitoring", "AWS, server configurations, and monitoring setup", 3999.0),
+            ("AI & Automation Solutions", "AI chatbots and workflow integrations", 4999.0),
+            ("Custom Web Applications", "Bespoke management systems, CRM & ERP software", 8999.0),
+        ]
+        for name, desc, price in services_to_seed:
+            existing = db.query(models.Service).filter(models.Service.name == name).first()
+            if not existing:
+                new_service = models.Service(name=name, description=desc, base_price=price)
+                db.add(new_service)
+        db.commit()
 
         # 3. Seed Testimonials
         if db.query(models.Testimonial).count() == 0:

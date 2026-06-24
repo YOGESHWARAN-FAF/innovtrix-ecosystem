@@ -63,12 +63,12 @@ export default function About() {
   ]
 
   return (
-    <div className="font-sans bg-black text-slate-100 min-h-screen bg-grid-pattern">
+    <div className="font-sans bg-[#050505] text-zinc-100 min-h-screen bg-grid-pattern">
       
       {/* Intro Banner */}
-      <section className="bg-black py-28 px-6 relative border-b border-white/10 overflow-hidden">
+      <section className="bg-[#050505] py-28 px-6 relative border-b border-white/10 overflow-hidden bg-grid-pattern">
         <div className="glow-bg bg-brand-primary/20 top-0 left-10"></div>
-        <div className="max-w-5xl mx-auto text-center z-10 relative">
+        <div className="max-w-4xl mx-auto text-center z-10 relative">
           <motion.span 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -78,23 +78,23 @@ export default function About() {
           </motion.span>
           <h1 className="text-4xl md:text-7xl font-black text-white mt-8 tracking-tight uppercase leading-[1.1]">
             We Build Websites <br />
-            <span className="text-transparent [-webkit-text-stroke:1.5px_white]">That Build Businesses</span>
+            <span className="text-transparent [-webkit-text-stroke:1.5px_white] hover:text-brand-primary hover:[-webkit-text-stroke:1.5px_#FFBA00] transition-colors duration-500">That Build Businesses</span>
           </h1>
-          <p className="text-slate-400 text-lg md:text-xl mt-8 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-zinc-400 text-lg md:text-xl mt-8 max-w-3xl mx-auto leading-relaxed font-semibold">
             Innovtrix delivers engineering excellence across custom web storefronts, commercial presentation sites, and embedded systems prototypes.
           </p>
         </div>
       </section>
 
       {/* Team / Founders Section */}
-      <section className="py-32 px-6 border-b border-white/10 relative overflow-hidden bg-zinc-950/40">
-        <div className="glow-bg bg-brand-primary/15 bottom-10 right-10"></div>
+      <section className="py-32 px-6 border-b border-white/10 relative overflow-hidden bg-[#070707]">
+        <div className="glow-bg bg-brand-primary/5 bottom-10 right-10"></div>
         
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-24" data-aos="fade-up">
             <span className="text-xs font-black tracking-widest text-brand-primary uppercase">INNOVTRIX BRAINS</span>
-            <h2 className="text-3xl md:text-5xl font-black text-white mt-4 uppercase">Founders & Leadership</h2>
-            <p className="text-slate-400 text-sm md:text-base max-w-xl mx-auto mt-4">
+            <h2 className="text-3xl md:text-5xl font-black text-white mt-4 uppercase font-sans">Founders & Leadership</h2>
+            <p className="text-zinc-400 text-sm md:text-base max-w-xl mx-auto mt-4 font-semibold">
               Meet the engineering core driving our high-performance client deployments and automation stacks.
             </p>
           </div>
@@ -103,17 +103,19 @@ export default function About() {
             {founders.map((founder, idx) => (
               <div 
                 key={idx} 
-                className="flex flex-col md:flex-row items-center md:items-start gap-12 p-8 md:p-12 pt-20 md:pt-12 rounded-[2.5rem] bg-zinc-900/30 border border-white/5 shadow-glass-dark relative group overflow-hidden md:overflow-visible"
+                className="flex flex-col md:flex-row items-center md:items-start gap-12 p-8 md:p-12 pt-20 md:pt-12 rounded-[2.5rem] bg-zinc-950/80 border border-white/5 shadow-2xl hover:shadow-[0_20px_50px_rgba(255,186,0,0.12)] hover:border-brand-primary/40 transition-all duration-300 relative group overflow-hidden md:overflow-visible glow-gold"
                 data-aos={idx === 0 ? "fade-right" : "fade-left"}
               >
+                {/* Sleek Golden Accent Line on hover */}
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#FFBA00] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 {/* Lanyard Clip and Badge Card */}
                 <div className="flex flex-col items-center w-full max-w-[240px] md:max-w-none md:w-[220px] shrink-0 relative pt-12">
                   {/* Lanyard String */}
-                  <div className="absolute -top-20 left-1/2 w-2 h-32 bg-zinc-800 transform -translate-x-1/2 shadow-inner z-0">
-                    {/* Ambassador Google Pin/Gemini Spark */}
+                  <div className="absolute -top-20 left-1/2 w-2 h-32 bg-zinc-700 transform -translate-x-1/2 shadow-inner z-0">
+                    {/* Ambassador Pin/Gemini Spark */}
                     <div 
-                      className={`absolute top-[20px] left-1/2 -translate-x-1/2 w-6 h-6 rounded-full shadow-[0_4px_8px_rgba(0,0,0,0.5)] flex items-center justify-center transition-all duration-300 z-10 cursor-pointer ${
-                        idx === 0 ? 'bg-zinc-950 border border-zinc-800 text-[#FFBA00]' : 'bg-white border border-gray-300 text-black'
+                      className={`absolute top-[20px] left-1/2 -translate-x-1/2 w-6 h-6 rounded-full shadow-[0_4px_8px_rgba(0,0,0,0.4)] flex items-center justify-center transition-all duration-300 z-10 cursor-pointer ${
+                        idx === 0 ? 'bg-zinc-900 border border-white/10 text-[#FFBA00]' : 'bg-zinc-950 border border-white/5 text-white'
                       }`}
                     >
                       {idx === 0 ? (
@@ -126,16 +128,16 @@ export default function About() {
                     </div>
                   </div>
                   {/* Clip */}
-                  <div className="absolute top-10 left-1/2 w-5 h-8 bg-zinc-700 rounded border border-zinc-600 transform -translate-x-1/2 z-10 shadow-md"></div>
+                  <div className="absolute top-10 left-1/2 w-5 h-8 bg-zinc-700 rounded border border-zinc-650 transform -translate-x-1/2 z-10 shadow-md"></div>
                   
                   {/* Badge Card */}
-                  <div className={`bg-zinc-950 w-full rounded-3xl p-4 border border-zinc-800 shadow-2xl relative z-20 transform transition-transform duration-500 ${founder.rotation} ${founder.hoverRotation} group-hover:scale-[1.03] group-hover:border-brand-primary/40`}>
+                  <div className={`bg-zinc-900 w-full rounded-3xl p-4 border border-white/10 shadow-2xl relative z-20 transform transition-transform duration-500 ${founder.rotation} ${founder.hoverRotation} group-hover:scale-[1.03] group-hover:border-brand-primary/40`}>
                     {/* Hole Cut */}
-                    <div className="absolute -top-2 left-1/2 w-10 h-4 bg-zinc-950 rounded-t-lg transform -translate-x-1/2 flex justify-center items-center">
+                    <div className="absolute -top-2 left-1/2 w-10 h-4 bg-zinc-900 rounded-t-lg transform -translate-x-1/2 flex justify-center items-center">
                       <div className="w-5 h-1.5 bg-black/40 rounded-full shadow-inner"></div>
                     </div>
                     {/* Profile Frame */}
-                    <div className="w-full aspect-[3/4] overflow-hidden rounded-2xl bg-zinc-900 border border-zinc-800 relative">
+                    <div className="w-full aspect-[3/4] overflow-hidden rounded-2xl bg-zinc-950 border border-zinc-800 relative">
                       <img 
                         src={founder.image} 
                         alt={founder.name} 
@@ -144,7 +146,7 @@ export default function About() {
                     </div>
                     {/* Badge Meta */}
                     <div className="mt-4 text-center">
-                      <div className="text-[9px] font-black uppercase tracking-widest text-slate-500">INNOVTRIX ID</div>
+                      <div className="text-[9px] font-black uppercase tracking-widest text-zinc-500">INNOVTRIX ID</div>
                       <h4 className="text-white text-base font-black tracking-tight mt-1 uppercase">{founder.name.split(' ')[0]}</h4>
                       <span className="inline-block mt-2 text-[8px] font-black uppercase tracking-widest px-2.5 py-1 bg-brand-primary text-black rounded-md">
                         {founder.badgeRole}
@@ -159,15 +161,15 @@ export default function About() {
                     <h3 className="text-2xl font-black text-white uppercase tracking-tight">{founder.name}</h3>
                     <div className="text-brand-primary font-bold text-xs uppercase tracking-widest mt-1.5">{founder.role}</div>
                     
-                    <p className="text-slate-400 text-sm mt-6 leading-relaxed font-medium">
-                      {founder.bio}
+                    <p className="text-zinc-300 text-sm mt-6 leading-relaxed font-semibold">
+                      {founder.role.includes('DevOps') ? 'Expert in AWS, CI/CD orchestration, Terraform, Docker, and Linux administration. Engineers scalable, automated cloud architecture with high-security guardrails.' : founder.bio}
                     </p>
 
                     <div className="flex flex-wrap gap-2 mt-6 justify-center md:justify-start">
                       {founder.skills.map((skill, sIdx) => (
                         <span 
                           key={sIdx}
-                          className="text-[10px] font-black uppercase tracking-wider px-3 py-1 bg-zinc-900 text-slate-300 rounded-full border border-white/5"
+                          className="text-[10px] font-black uppercase tracking-wider px-3 py-1 bg-zinc-900 text-zinc-300 rounded-full border border-white/5"
                         >
                           {skill}
                         </span>
@@ -176,14 +178,14 @@ export default function About() {
                   </div>
 
                   {/* Social Buttons */}
-                  <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/5 w-full justify-center md:justify-start">
-                    <a href={founder.socials.github} target="_blank" rel="noopener noreferrer" className="p-3 bg-zinc-900 hover:bg-brand-primary hover:text-black rounded-2xl border border-white/5 transition-all text-slate-400">
+                  <div className="flex items-center gap-4 mt-8 pt-6 border-t border-white/10 w-full justify-center md:justify-start">
+                    <a href={founder.socials.github} target="_blank" rel="noopener noreferrer" className="p-3 bg-zinc-900 hover:bg-brand-primary hover:text-black rounded-2xl border border-white/5 transition-all text-zinc-400">
                       <FiGithub size={18} />
                     </a>
-                    <a href={founder.socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 bg-zinc-900 hover:bg-brand-primary hover:text-black rounded-2xl border border-white/5 transition-all text-slate-400">
+                    <a href={founder.socials.linkedin} target="_blank" rel="noopener noreferrer" className="p-3 bg-zinc-900 hover:bg-brand-primary hover:text-black rounded-2xl border border-white/5 transition-all text-zinc-400">
                       <FiLinkedin size={18} />
                     </a>
-                    <a href={founder.socials.email} className="p-3 bg-zinc-900 hover:bg-brand-primary hover:text-black rounded-2xl border border-white/5 transition-all text-slate-400">
+                    <a href={founder.socials.email} className="p-3 bg-zinc-900 hover:bg-brand-primary hover:text-black rounded-2xl border border-white/5 transition-all text-zinc-400">
                       <FiMail size={18} />
                     </a>
                   </div>
@@ -196,21 +198,21 @@ export default function About() {
       </section>
 
       {/* Philosophy Section */}
-      <section className="py-28 bg-black px-6">
+      <section className="py-28 bg-[#050505] px-6">
         <div className="max-w-4xl mx-auto text-center" data-aos="fade-up">
           <span className="text-xs font-black tracking-widest text-brand-primary uppercase font-sans">THE INNOVTRIX WAY</span>
           <h2 className="text-3xl md:text-5xl font-black text-white mt-4 mb-8 uppercase leading-tight">Designed for Scale, Engineered for Performance</h2>
-          <p className="text-slate-400 text-base md:text-lg leading-relaxed mb-6 font-medium">
+          <p className="text-zinc-400 text-base md:text-lg leading-relaxed mb-6 font-semibold">
             Our engineering process blends aesthetic design with technical performance. We utilize React and Vite for our frontend rendering because it provides instant compilation, lightweight assets, and modern Component structuring.
           </p>
-          <p className="text-slate-400 text-base md:text-lg leading-relaxed font-medium">
+          <p className="text-zinc-400 text-base md:text-lg leading-relaxed font-semibold">
             On the backend, our services leverage FastAPI (Python) and MySQL database arrays. FastAPI provides high-speed execution, automated documentation via OpenAPI schemas, and strict data type checks to secure company pipelines.
           </p>
         </div>
       </section>
 
       {/* Core Values */}
-      <section className="py-28 bg-zinc-950 border-t border-white/10 px-6">
+      <section className="py-28 bg-[#070707] border-t border-white/10 px-6 bg-grid-pattern">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20" data-aos="fade-up">
             <span className="text-xs font-black tracking-widest text-brand-primary uppercase">OUR FOUNDATION</span>
@@ -223,11 +225,13 @@ export default function About() {
                 key={index}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
-                className="glass-card p-8 hover:border-brand-primary/30 hover:shadow-glow transition-all duration-300 flex flex-col justify-start bg-zinc-900/10 border-white/5"
+                className="premium-card p-8 flex flex-col justify-start bg-zinc-950/80 glow-gold relative overflow-hidden group"
               >
+                {/* Sleek Golden Accent Line on hover */}
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#FFBA00] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 <div className="mb-4">{val.icon}</div>
                 <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">{val.title}</h3>
-                <p className="text-slate-400 text-sm leading-relaxed">{val.description}</p>
+                <p className="text-zinc-455 text-sm leading-relaxed font-semibold">{val.description}</p>
               </div>
             ))}
           </div>

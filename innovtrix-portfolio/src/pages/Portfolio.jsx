@@ -65,25 +65,26 @@ export default function Portfolio() {
     ? projects 
     : projects.filter(p => p.type === filter || p.category.includes(filter))
 
+
   return (
-    <div className="font-sans bg-black text-slate-100 min-h-screen bg-grid-pattern">
+    <div className="font-sans bg-[#050505] text-zinc-100 min-h-screen bg-grid-pattern">
       {/* Intro Banner */}
-      <section className="bg-black py-28 px-6 relative border-b border-white/10">
-        <div className="glow-bg bg-brand-primary/20 top-0 left-10"></div>
+      <section className="bg-transparent py-28 px-6 relative border-b border-white/10">
+        <div className="glow-bg bg-brand-primary/10 top-0 left-10"></div>
         <div className="max-w-4xl mx-auto text-center z-10 relative">
           <span className="text-xs font-black text-brand-primary uppercase tracking-widest bg-brand-primary/10 border border-brand-primary/20 px-4 py-1.5 rounded-full">CLIENT PROJECTS</span>
           <h1 className="text-4xl md:text-7xl font-black text-white mt-8 tracking-tight uppercase leading-[1.1]">
             Our Client <br />
-            <span className="text-transparent [-webkit-text-stroke:1.5px_white]">Projects</span>
+            <span className="text-transparent [-webkit-text-stroke:1.5px_white] hover:text-brand-primary hover:[-webkit-text-stroke:1.5px_#FFBA00] transition-colors duration-500">Projects</span>
           </h1>
-          <p className="text-slate-400 text-lg md:text-xl mt-8 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-zinc-400 text-lg md:text-xl mt-8 max-w-2xl mx-auto leading-relaxed font-semibold">
             Take a look at some of our production builds. Each project was customized to optimize speed, conversions, and layout design.
           </p>
         </div>
       </section>
 
       {/* Filterable Portfolio Grid */}
-      <section className="py-32 bg-black px-6">
+      <section className="py-32 bg-transparent px-6">
         <div className="max-w-7xl mx-auto">
           
           {/* Filters */}
@@ -94,8 +95,8 @@ export default function Portfolio() {
                 onClick={() => setFilter(cat)}
                 className={`px-5 py-2.5 text-xs font-bold uppercase tracking-widest rounded-xl border transition-all duration-300 cursor-pointer ${
                   filter === cat 
-                    ? 'border-brand-primary bg-brand-primary/10 text-white shadow-glow' 
-                    : 'border-white/5 bg-zinc-900/40 text-slate-400 hover:border-white/20 hover:text-white'
+                    ? 'border-brand-primary bg-brand-primary/10 text-white shadow-sm font-black' 
+                    : 'border-white/10 bg-zinc-950 text-zinc-400 hover:border-brand-primary/45 hover:text-white'
                 }`}
               >
                 {cat}
@@ -110,8 +111,12 @@ export default function Portfolio() {
                 key={index}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
-                className="glass-card overflow-hidden border border-white/5 hover:border-brand-primary/30 hover:shadow-glow transition-all duration-300 group flex flex-col justify-between bg-zinc-900/10"
+                className="premium-card overflow-hidden group flex flex-col justify-between bg-zinc-950/60 backdrop-blur-lg border border-white/5 glow-gold relative transition-all duration-500"
               >
+                {/* Sleek Golden Accent Line on hover */}
+                <div className="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-[#FFBA00] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Ambient radial glow in background on hover */}
+                <div className="absolute -right-20 -bottom-20 w-60 h-60 bg-brand-primary/5 rounded-full blur-[80px] group-hover:bg-brand-primary/10 transition-all duration-700 pointer-events-none" />
                 <div>
                   <div className="relative h-56 overflow-hidden">
                     <img 
@@ -119,31 +124,31 @@ export default function Portfolio() {
                       alt={project.title} 
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
-                    <div className="absolute inset-0 bg-black/60 group-hover:bg-black/35 transition-colors"></div>
-                    <span className="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase bg-black/90 text-brand-primary px-4 py-1.5 rounded-full border border-white/10">
+                    <div className="absolute inset-0 bg-black/40 group-hover:bg-black/20 transition-colors"></div>
+                    <span className="absolute top-4 left-4 text-[10px] font-black tracking-widest uppercase bg-black/85 backdrop-blur-md text-brand-primary px-4 py-1.5 rounded-full border border-white/10 shadow-sm">
                       {project.category}
                     </span>
                   </div>
-                  <div className="p-6">
+                  <div className="p-6 bg-transparent">
                     <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">{project.title}</h3>
-                    <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-4">{project.desc}</p>
+                    <p className="text-zinc-400 text-xs sm:text-sm leading-relaxed mb-4 font-semibold">{project.desc}</p>
                   </div>
                 </div>
 
-                <div className="p-6 pt-0 flex flex-col sm:flex-row gap-3">
+                <div className="p-6 pt-0 bg-transparent flex flex-col sm:flex-row gap-3">
                   {project.link && (
                     <a 
                       href={project.link} 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="flex-1 btn-secondary text-xs bg-emerald-500/10 hover:bg-emerald-500 border-emerald-500/20 hover:border-transparent text-white py-3 transition-all flex items-center justify-center gap-2 font-bold uppercase tracking-wider"
+                      className="flex-1 btn-secondary text-xs bg-emerald-950/30 hover:bg-emerald-500 border-emerald-500/20 hover:border-transparent text-emerald-400 hover:text-white py-3 transition-all flex items-center justify-center gap-2 font-bold uppercase tracking-wider"
                     >
                       Sample Website <FiArrowRight size={12} />
                     </a>
                   )}
                   <button 
                     onClick={() => navigate('/contact')}
-                    className="flex-1 btn-secondary text-xs bg-zinc-900 border-zinc-800 text-white hover:bg-brand-primary hover:text-black hover:border-brand-primary transition-all duration-300 flex items-center justify-center gap-2 py-3 font-bold uppercase tracking-wider"
+                    className="flex-1 btn-primary py-3"
                   >
                     Discuss Build <FiArrowRight size={12} />
                   </button>
@@ -153,7 +158,7 @@ export default function Portfolio() {
           </div>
 
           {filteredProjects.length === 0 && (
-            <p className="text-center text-slate-500 text-sm py-12">
+            <p className="text-center text-zinc-500 text-sm py-12 font-semibold">
               No project listings in this category. More updates coming soon.
             </p>
           )}
@@ -162,11 +167,11 @@ export default function Portfolio() {
       </section>
 
       {/* Call to Action Banner */}
-      <section className="py-24 bg-zinc-950 border-t border-white/10 px-6 relative bg-grid-pattern">
-        <div className="glow-bg bg-brand-primary/10 top-10 left-10"></div>
+      <section className="py-24 bg-transparent border-t border-white/10 px-6 relative">
+        <div className="glow-bg bg-brand-primary/5 top-10 left-10"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10" data-aos="zoom-in">
           <h2 className="text-3xl md:text-5xl font-black text-white mb-6 uppercase tracking-tight">Want a Customized Platform?</h2>
-          <p className="text-slate-400 text-sm md:text-base mb-10 max-w-xl mx-auto leading-relaxed font-medium">
+          <p className="text-zinc-400 text-sm md:text-base mb-10 max-w-xl mx-auto leading-relaxed font-semibold">
             Let us review your design goals, required features, and budget ranges to build a proposal proposal.
           </p>
           <button 
