@@ -25,7 +25,7 @@ export default function Portfolio() {
   const fetchProjects = async () => {
     try {
       setLoading(true)
-      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-nine.vercel.app'
       const response = await fetch(`${currentApiUrl}/api/portfolio`)
       if (response.ok) {
         const data = await response.json()
@@ -81,7 +81,7 @@ export default function Portfolio() {
     setSuccess('')
 
     const token = localStorage.getItem('admin_token')
-    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-nine.vercel.app'
     const url = editingId 
       ? `${currentApiUrl}/api/portfolio/${editingId}`
       : `${currentApiUrl}/api/portfolio`
@@ -121,7 +121,7 @@ export default function Portfolio() {
 
     const token = localStorage.getItem('admin_token')
     try {
-      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-nine.vercel.app'
       const response = await fetch(`${currentApiUrl}/api/portfolio/${id}`, {
         method: 'DELETE',
         headers: {

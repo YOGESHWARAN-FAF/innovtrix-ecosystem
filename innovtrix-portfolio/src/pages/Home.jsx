@@ -239,7 +239,7 @@ export default function Home() {
 
     const fetchStats = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings/stats`)
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-nine.vercel.app'}/api/settings/stats`)
         if (response.ok) {
           const data = await response.json()
           if (data && data.value) {

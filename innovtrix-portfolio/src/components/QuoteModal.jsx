@@ -56,7 +56,7 @@ export default function QuoteModal({ isOpen, onClose }) {
     setErrorMsg('')
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-nine.vercel.app'}/api/quotes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

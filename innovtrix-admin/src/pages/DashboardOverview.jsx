@@ -45,7 +45,7 @@ export default function DashboardOverview() {
       try {
         const token = localStorage.getItem('admin_token')
         const headers = { 'Authorization': `Bearer ${token}` }
-        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-nine.vercel.app'
         
         const [quotesRes, projectsRes, invoicesRes, paymentsRes] = await Promise.all([
           fetch(`${currentApiUrl}/api/quotes`, { headers }),
