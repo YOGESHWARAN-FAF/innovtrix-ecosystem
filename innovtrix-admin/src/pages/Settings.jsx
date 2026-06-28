@@ -8,7 +8,9 @@ export default function Settings() {
     role: 'Senior Administrator'
   })
   
-  const [backendUrl, setBackendUrl] = useState(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}`)
+  const [backendUrl, setBackendUrl] = useState(
+    localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
+  )
   
   // Custom stats and founders state configuration
   const [stats, setStats] = useState([
@@ -44,7 +46,8 @@ export default function Settings() {
     const fetchSettings = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings`)
+        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
+        const response = await fetch(`${currentApiUrl}/api/settings`)
         if (response.ok) {
           const data = await response.json()
           if (data.stats) {
@@ -78,8 +81,9 @@ export default function Settings() {
     setSuccess('')
     
     const token = localStorage.getItem('admin_token')
+    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
     try {
-      const statsRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/stats`, {
+      const statsRes = await fetch(`${currentApiUrl}/api/settings/stats`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -106,8 +110,9 @@ export default function Settings() {
     setSuccess('')
     
     const token = localStorage.getItem('admin_token')
+    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
     try {
-      const foundersRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/founders`, {
+      const foundersRes = await fetch(`${currentApiUrl}/api/settings/founders`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -264,7 +269,12 @@ export default function Settings() {
               </form>
 
               {/* Connection Settings */}
-              <div className="dash-card space-y-4 bg-zinc-950/60 border border-white/5">
+              <form onSubmit={(e) => {
+                e.preventDefault()
+                localStorage.setItem('backend_url', backendUrl)
+                setSuccess('FastAPI connection URL saved successfully!')
+                setTimeout(() => setSuccess(''), 3000)
+              }} className="dash-card space-y-4 bg-zinc-950/60 border border-white/5">
                 <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
                   <FiDatabase className="text-brand-primary text-lg" />
                   <h3 className="text-xs font-black text-white uppercase tracking-widest">FastAPI Connection</h3>
@@ -283,7 +293,14 @@ export default function Settings() {
                     Used by dashboard clients to synchronize invoices, messages, and projects metadata with backend.
                   </p>
                 </div>
-              </div>
+
+                <button
+                  type="submit"
+                  className="btn-primary w-full py-3"
+                >
+                  <FiSave size={14} /> Save Connection
+                </button>
+              </form>
             </div>
           )}
 

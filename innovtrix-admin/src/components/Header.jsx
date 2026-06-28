@@ -9,7 +9,8 @@ export default function Header({ onLogout, onToggleSidebar }) {
   const fetchNotifications = async () => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/notifications`, {
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const response = await fetch(`${currentApiUrl}/api/notifications`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -42,7 +43,8 @@ export default function Header({ onLogout, onToggleSidebar }) {
   const markAllRead = async () => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/notifications/read-all`, {
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const response = await fetch(`${currentApiUrl}/api/notifications/read-all`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -105,7 +107,7 @@ export default function Header({ onLogout, onToggleSidebar }) {
            </button>
            
            {showNotifications && (
-             <div className="absolute right-0 mt-3 w-[calc(100vw-2rem)] sm:w-80 max-w-sm bg-zinc-950/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-4 z-40 space-y-3 bg-grid-pattern">
+             <div className="fixed top-20 right-4 left-4 w-auto sm:absolute sm:top-auto sm:right-0 sm:left-auto sm:w-80 sm:max-w-sm bg-zinc-950/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-4 z-40 space-y-3 bg-grid-pattern">
               <div className="flex justify-between items-center border-b border-white/5 pb-2">
                 <span className="text-xs font-bold text-white">Notifications</span>
                 {unreadCount > 0 && (

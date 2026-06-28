@@ -45,12 +45,13 @@ export default function DashboardOverview() {
       try {
         const token = localStorage.getItem('admin_token')
         const headers = { 'Authorization': `Bearer ${token}` }
+        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
         
         const [quotesRes, projectsRes, invoicesRes, paymentsRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/projects`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/invoices`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/payments`, { headers })
+          fetch(`${currentApiUrl}/api/quotes`, { headers }),
+          fetch(`${currentApiUrl}/api/projects`, { headers }),
+          fetch(`${currentApiUrl}/api/invoices`, { headers }),
+          fetch(`${currentApiUrl}/api/payments`, { headers })
         ])
 
         const quotes = quotesRes.ok ? await quotesRes.json() : []

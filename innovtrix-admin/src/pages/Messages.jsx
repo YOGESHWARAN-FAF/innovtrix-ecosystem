@@ -10,7 +10,8 @@ export default function Messages() {
     const fetchMessages = async () => {
       try {
         const token = localStorage.getItem('admin_token')
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/contact`, {
+        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+        const response = await fetch(`${currentApiUrl}/api/contact`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -34,7 +35,8 @@ export default function Messages() {
   const handleMarkReplied = async (mId) => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/contact/${mId}`, {
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const response = await fetch(`${currentApiUrl}/api/contact/${mId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +57,8 @@ export default function Messages() {
   const handleDeleteMsg = async (mId) => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/contact/${mId}`, {
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const response = await fetch(`${currentApiUrl}/api/contact/${mId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

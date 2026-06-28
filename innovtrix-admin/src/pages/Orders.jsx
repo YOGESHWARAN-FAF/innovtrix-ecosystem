@@ -10,7 +10,8 @@ export default function Orders() {
     const fetchOrders = async () => {
       try {
         const token = localStorage.getItem('admin_token')
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/orders`, {
+        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+        const response = await fetch(`${currentApiUrl}/api/orders`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -40,7 +41,8 @@ export default function Orders() {
   const handleUpdateStatus = async (updatedOrder) => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/orders/${updatedOrder.id}`, {
+      const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
+      const response = await fetch(`${currentApiUrl}/api/orders/${updatedOrder.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
