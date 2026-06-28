@@ -9,7 +9,7 @@ export default function Settings() {
   })
   
   const [backendUrl, setBackendUrl] = useState(
-    localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
+    localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
   )
   
   // Custom stats and founders state configuration
@@ -46,7 +46,7 @@ export default function Settings() {
     const fetchSettings = async () => {
       try {
         setLoading(true)
-        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
+        const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
         const response = await fetch(`${currentApiUrl}/api/settings`)
         if (response.ok) {
           const data = await response.json()
@@ -81,7 +81,7 @@ export default function Settings() {
     setSuccess('')
     
     const token = localStorage.getItem('admin_token')
-    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
+    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
     try {
       const statsRes = await fetch(`${currentApiUrl}/api/settings/stats`, {
         method: 'PUT',
@@ -110,7 +110,7 @@ export default function Settings() {
     setSuccess('')
     
     const token = localStorage.getItem('admin_token')
-    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'http://localhost:8000'
+    const currentApiUrl = localStorage.getItem('backend_url') || import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'
     try {
       const foundersRes = await fetch(`${currentApiUrl}/api/settings/founders`, {
         method: 'PUT',
