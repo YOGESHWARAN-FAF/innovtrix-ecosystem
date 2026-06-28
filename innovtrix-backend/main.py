@@ -10,9 +10,6 @@ import schemas
 import auth
 import database
 
-# Initialize Database tables
-models.Base.metadata.create_all(bind=database.engine)
-
 app = FastAPI(
     title="Innovtrix Corporate API Ecosystem",
     description="Enterprise-grade REST backend managing leads, invoices, active projects, and security audits.",
@@ -31,6 +28,13 @@ app.add_middleware(
 # Startup Seeding Routine
 @app.on_event("startup")
 def seed_database():
+    # Initialize Database tables safely on startup
+    try:
+        models.Base.metadata.create_all(bind=database.engine)
+        print("Database tables initialized successfully.")
+    except Exception as e:
+        print(f"Error during database table initialization: {e}")
+
     db = next(database.get_db())
     try:
         # 1. Seed Admin
