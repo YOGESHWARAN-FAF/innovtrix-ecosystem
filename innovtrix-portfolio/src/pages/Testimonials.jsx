@@ -32,7 +32,7 @@ export default function Testimonials() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/testimonials`)
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/testimonials`)
         if (response.ok) {
           const data = await response.json()
           setTestimonials(data)

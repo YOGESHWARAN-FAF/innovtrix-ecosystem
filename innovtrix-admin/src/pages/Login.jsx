@@ -13,7 +13,7 @@ export default function Login({ onLoginSuccess }) {
 
     // Attempt real API request first
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

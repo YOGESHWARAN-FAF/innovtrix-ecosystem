@@ -19,7 +19,7 @@ export default function Invoices() {
     const fetchInvoices = async () => {
       try {
         const token = localStorage.getItem('admin_token')
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/invoices`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/invoices`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -43,7 +43,7 @@ export default function Invoices() {
 
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/invoices`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/invoices`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -47,10 +47,10 @@ export default function DashboardOverview() {
         const headers = { 'Authorization': `Bearer ${token}` }
         
         const [quotesRes, projectsRes, invoicesRes, paymentsRes] = await Promise.all([
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/quotes`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/projects`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/invoices`, { headers }),
-          fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/payments`, { headers })
+          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/projects`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/invoices`, { headers }),
+          fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/payments`, { headers })
         ])
 
         const quotes = quotesRes.ok ? await quotesRes.json() : []

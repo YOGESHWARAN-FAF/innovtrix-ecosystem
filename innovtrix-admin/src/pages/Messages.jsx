@@ -10,7 +10,7 @@ export default function Messages() {
     const fetchMessages = async () => {
       try {
         const token = localStorage.getItem('admin_token')
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/contact`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/contact`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -39,7 +39,7 @@ export default function Messages() {
   const handleDeleteMsg = async (mId) => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/contact/${mId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/contact/${mId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

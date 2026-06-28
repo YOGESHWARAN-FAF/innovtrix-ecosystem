@@ -55,7 +55,7 @@ export default function Contact() {
     setErrorMsg('')
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/quotes`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

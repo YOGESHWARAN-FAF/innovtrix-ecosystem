@@ -25,7 +25,7 @@ export default function Portfolio() {
   const fetchProjects = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/portfolio`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/portfolio`)
       if (response.ok) {
         const data = await response.json()
         setProjects(data)
@@ -81,8 +81,8 @@ export default function Portfolio() {
 
     const token = localStorage.getItem('admin_token')
     const url = editingId 
-      ? `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/portfolio/${editingId}`
-      : `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/portfolio`
+      ? `${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/portfolio/${editingId}`
+      : `${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/portfolio`
     
     const method = editingId ? 'PUT' : 'POST'
 
@@ -119,7 +119,7 @@ export default function Portfolio() {
 
     const token = localStorage.getItem('admin_token')
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/portfolio/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/portfolio/${id}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`

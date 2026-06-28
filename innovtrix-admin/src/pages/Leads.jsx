@@ -13,7 +13,7 @@ export default function Leads() {
     const fetchLeads = async () => {
       try {
         const token = localStorage.getItem('admin_token')
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/quotes`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -37,7 +37,7 @@ export default function Leads() {
   const handleUpdateLead = async (updatedLead) => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/quotes/${updatedLead.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes/${updatedLead.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

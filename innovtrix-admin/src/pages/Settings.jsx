@@ -8,7 +8,7 @@ export default function Settings() {
     role: 'Senior Administrator'
   })
   
-  const [backendUrl, setBackendUrl] = useState(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}`)
+  const [backendUrl, setBackendUrl] = useState(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}`)
   
   // Custom stats and founders state configuration
   const [stats, setStats] = useState([
@@ -43,7 +43,7 @@ export default function Settings() {
     const fetchSettings = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings`)
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings`)
         if (response.ok) {
           const data = await response.json()
           if (data.stats) {
@@ -79,7 +79,7 @@ export default function Settings() {
     const token = localStorage.getItem('admin_token')
     try {
       // 1. Save statistics
-      const statsRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/stats`, {
+      const statsRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings/stats`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export default function Settings() {
       })
 
       // 2. Save founders
-      const foundersRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/founders`, {
+      const foundersRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings/founders`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -220,7 +220,7 @@ export default function Settings() {
                   type="url"
                   value={backendUrl}
                   onChange={(e) => setBackendUrl(e.target.value)}
-                  placeholder={import.meta.env.VITE_API_URL || 'http://localhost:8000'}
+                  placeholder={import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}
                   className="dash-input"
                 />
                 <p className="text-[10px] text-slate-500 mt-2 font-semibold">

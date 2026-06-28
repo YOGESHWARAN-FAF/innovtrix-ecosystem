@@ -11,7 +11,7 @@ export default function Projects() {
     const fetchProjects = async () => {
       try {
         const token = localStorage.getItem('admin_token')
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/projects`, {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/projects`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -60,7 +60,7 @@ export default function Projects() {
   const handleUpdateProject = async (updatedProj) => {
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/projects/${updatedProj.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/projects/${updatedProj.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -111,7 +111,7 @@ export default function Projects() {
 
     try {
       const token = localStorage.getItem('admin_token')
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/projects/${pId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/projects/${pId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
