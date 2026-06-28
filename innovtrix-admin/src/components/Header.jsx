@@ -3,21 +3,57 @@ import { FiBell, FiSearch, FiLogOut, FiUser, FiMenu } from 'react-icons/fi'
 
 export default function Header({ onLogout, onToggleSidebar }) {
   const [adminEmail, setAdminEmail] = useState('innovtrix30@gmail.com')
-  const [notifications, setNotifications] = useState([
-    { id: 1, text: 'New E-Commerce quote request from Silk & Thread', read: false },
-    { id: 2, text: 'Project Milestone approved for Apex Group', read: false }
-  ])
+  const [notifications, setNotifications] = useState([])
   const [showNotifications, setShowNotifications] = useState(false)
+
+  const fetchNotifications = async () => {
+    try {
+      const token = localStorage.getItem('admin_token')
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/notifications`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (response.ok) {
+        const data = await response.json()
+        setNotifications(data.map(n => ({
+          id: n.id,
+          text: n.message,
+          read: n.read_status
+        })))
+      }
+    } catch (err) {
+      console.error('Failed to fetch notifications:', err)
+    }
+  }
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('admin_email')
     if (savedEmail) {
       setAdminEmail(savedEmail)
     }
+    fetchNotifications()
+    
+    // Poll notifications every 30 seconds for live updates
+    const interval = setInterval(fetchNotifications, 30000)
+    return () => clearInterval(interval)
   }, [])
 
-  const markAllRead = () => {
-    setNotifications(notifications.map(n => ({ ...n, read: true })))
+  const markAllRead = async () => {
+    try {
+      const token = localStorage.getItem('admin_token')
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/notifications/read-all`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      if (response.ok) {
+        setNotifications(notifications.map(n => ({ ...n, read: true })))
+      }
+    } catch (err) {
+      console.error('Failed to mark all as read:', err)
+    }
   }
 
   const unreadCount = notifications.filter(n => !n.read).length
@@ -52,7 +88,12 @@ export default function Header({ onLogout, onToggleSidebar }) {
          {/* Notifications Icon & Panel */}
          <div className="relative">
            <button 
-             onClick={() => setShowNotifications(!showNotifications)}
+             onClick={() => {
+               setShowNotifications(!showNotifications)
+               if (!showNotifications) {
+                 fetchNotifications()
+               }
+             }}
              className="relative p-2.5 rounded-xl bg-zinc-900/40 hover:bg-zinc-800 text-slate-400 hover:text-white border border-white/5 transition-colors cursor-pointer"
            >
              <FiBell size={16} />
@@ -64,7 +105,7 @@ export default function Header({ onLogout, onToggleSidebar }) {
            </button>
            
            {showNotifications && (
-             <div className="absolute right-0 mt-3 w-80 bg-zinc-950/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-4 z-40 space-y-3 bg-grid-pattern">
+             <div className="absolute right-0 mt-3 w-[calc(100vw-2rem)] sm:w-80 max-w-sm bg-zinc-950/95 backdrop-blur-md border border-white/10 rounded-xl shadow-2xl p-4 z-40 space-y-3 bg-grid-pattern">
               <div className="flex justify-between items-center border-b border-white/5 pb-2">
                 <span className="text-xs font-bold text-white">Notifications</span>
                 {unreadCount > 0 && (
@@ -73,14 +114,18 @@ export default function Header({ onLogout, onToggleSidebar }) {
                   </button>
                 )}
               </div>
-              <div className="space-y-2">
-                {notifications.map((n) => (
-                  <div key={n.id} className={`text-xs p-2.5 rounded-lg border ${
-                    n.read ? 'border-transparent text-slate-400' : 'border-brand-primary/20 bg-brand-primary/5 text-slate-200'
-                  }`}>
-                    {n.text}
-                  </div>
-                ))}
+              <div className="space-y-2 max-h-[300px] overflow-y-auto">
+                {notifications.length === 0 ? (
+                  <div className="text-center text-slate-500 text-xs py-4">No notifications</div>
+                ) : (
+                  notifications.map((n) => (
+                    <div key={n.id} className={`text-xs p-2.5 rounded-lg border ${
+                      n.read ? 'border-transparent text-slate-400' : 'border-brand-primary/20 bg-brand-primary/5 text-slate-200'
+                    }`}>
+                      {n.text}
+                    </div>
+                  ))
+                )}
               </div>
             </div>
           )}

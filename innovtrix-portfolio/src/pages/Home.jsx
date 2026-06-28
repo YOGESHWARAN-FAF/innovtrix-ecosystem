@@ -171,7 +171,7 @@ export default function Home() {
       title: "Discovery & Consultation",
       tag: "PHASE 1 - ALIGNMENT",
       text: "We research your target sectors (Textile, Retail, etc.) to understand product attributes and buyer journeys, aligning budgets and key deliverables.",
-      className: "md:absolute md:top-[300px] md:right-[5%] lg:right-[10%] rotate-1 md:rotate-4",
+      className: "md:absolute md:top-[300px] md:right-[5%] lg:right-[10%] md:rotate-4",
       delay: "100"
     },
     {
@@ -179,7 +179,7 @@ export default function Home() {
       title: "UI/UX Wireframing",
       tag: "PHASE 2 - DESIGN",
       text: "We design premium, high-conversion mockups. We optimize navigation flows, product grids, checkout structures, and lead generation banners.",
-      className: "md:absolute md:top-[650px] md:left-[5%] lg:left-[10%] -rotate-1 md:-rotate-4",
+      className: "md:absolute md:top-[650px] md:left-[5%] lg:left-[10%] md:-rotate-4",
       delay: "150"
     },
     {
@@ -187,7 +187,7 @@ export default function Home() {
       title: "Frontend Architecture",
       tag: "PHASE 3 - FRONTEND",
       text: "Using React 19 and Vite, we code the frontend components, applying Tailwind CSS styles and fluid Framer Motion / GSAP animations.",
-      className: "md:absolute md:top-[1000px] md:right-[5%] lg:right-[15%] rotate-1 md:rotate-3",
+      className: "md:absolute md:top-[1000px] md:right-[5%] lg:right-[15%] md:rotate-3",
       delay: "200"
     },
     {
@@ -195,7 +195,7 @@ export default function Home() {
       title: "Backend & DB Logic",
       tag: "PHASE 4 - SERVICES",
       text: "We configure FastAPI Python routers and connect them to MySQL tables. We build secure JWT authorization headers and automated invoicing routes.",
-      className: "md:absolute md:top-[1350px] md:left-[5%] lg:left-[15%] -rotate-1 md:-rotate-3",
+      className: "md:absolute md:top-[1350px] md:left-[5%] lg:left-[15%] md:-rotate-3",
       delay: "250"
     },
     {
@@ -203,7 +203,7 @@ export default function Home() {
       title: "Lighthouse & Security",
       tag: "PHASE 5 - AUDITS",
       text: "We verify performance, SEO metadata, and accessibility tags. We test payment transactions in staging, ensuring the codebase scores 90+ across categories.",
-      className: "md:absolute md:top-[1700px] md:right-[5%] lg:right-[12%] rotate-1 md:rotate-4",
+      className: "md:absolute md:top-[1700px] md:right-[5%] lg:right-[12%] md:rotate-4",
       delay: "300"
     },
     {
@@ -211,7 +211,7 @@ export default function Home() {
       title: "Cloud Deployment",
       tag: "PHASE 6 - LAUNCH",
       text: "We compile and build the final static assets for Vercel, and provision FastAPI services to Render, enabling continuous deployment from Git.",
-      className: "md:absolute md:top-[2050px] md:left-[5%] lg:left-[12%] -rotate-1 md:-rotate-4",
+      className: "md:absolute md:top-[2050px] md:left-[5%] lg:left-[12%] md:-rotate-4",
       delay: "350"
     }
   ]
@@ -415,22 +415,22 @@ export default function Home() {
             Innovtrix specializes in building modern E-Commerce platforms and professional commercial websites that are fast, secure, scalable, and designed to help businesses grow in the digital world.
           </p>
 
-          <div className="hero-actions flex flex-col sm:flex-row items-center justify-center gap-4 mt-12 opacity-0">
+          <div className="hero-actions flex flex-col md:flex-row items-center justify-center gap-4 mt-12 opacity-0">
             <button 
               onClick={() => navigate('/contact')} 
-              className="btn-primary w-full sm:w-auto px-8 py-4 text-base font-bold tracking-wider uppercase"
+              className="btn-primary w-full md:w-auto px-6 py-3 md:px-8 md:py-4 text-sm md:text-base font-bold tracking-wider uppercase"
             >
               Get a Proposal <FiArrowRight />
             </button>
             <Link 
               to="/pricing" 
-              className="btn-secondary w-full sm:w-auto px-8 py-4 text-base font-bold tracking-wider uppercase"
+              className="btn-secondary w-full md:w-auto px-6 py-3 md:px-8 md:py-4 text-sm md:text-base font-bold tracking-wider uppercase"
             >
               Explore Pricing
             </Link>
             <Link 
               to="/portfolio" 
-              className="btn-secondary w-full sm:w-auto px-8 py-4 text-base font-bold tracking-wider uppercase"
+              className="btn-secondary w-full md:w-auto px-6 py-3 md:px-8 md:py-4 text-sm md:text-base font-bold tracking-wider uppercase"
             >
               Client Projects
             </Link>
@@ -438,7 +438,7 @@ export default function Home() {
               href="https://ps-tex-production.up.railway.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-secondary w-full sm:w-auto px-8 py-4 text-base font-bold tracking-wider uppercase bg-emerald-950/30 hover:bg-emerald-500 border-emerald-500/20 hover:border-transparent text-emerald-400 hover:text-white transition-all duration-300"
+              className="btn-secondary w-full md:w-auto px-6 py-3 md:px-8 md:py-4 text-sm md:text-base font-bold tracking-wider uppercase bg-emerald-950/30 hover:bg-emerald-500 border-emerald-500/20 hover:border-transparent text-emerald-400 hover:text-white transition-all duration-300"
             >
               Sample Website
             </a>
@@ -623,7 +623,7 @@ export default function Home() {
 
           {/* Mobile Animated Vertical Dashed Line */}
           <svg 
-            className="md:hidden absolute top-0 left-[50%] -translate-x-1/2 w-4 h-[100%] pointer-events-none z-0" 
+            className="md:hidden absolute top-0 left-6 w-4 h-[100%] pointer-events-none z-0" 
             viewBox="0 0 4 100" 
             preserveAspectRatio="none"
           >
@@ -657,7 +657,7 @@ export default function Home() {
           </svg>
 
           {/* Cards Container */}
-          <div className="flex flex-col gap-8 md:gap-12 items-center md:block relative z-10 w-full pt-4 md:pt-0 pb-12 md:pb-0">
+          <div className="flex flex-col gap-8 md:gap-12 items-start pl-14 pr-4 md:pl-0 md:pr-0 md:block relative z-10 w-full pt-4 md:pt-0 pb-12 md:pb-0">
             {roadmapSteps.map((step, idx) => (
               <TagCard 
                 key={idx}

@@ -143,7 +143,7 @@ export default function Projects() {
     <div className="space-y-8 font-sans">
       
       {/* Module Title */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-bold text-white">Active Projects</h1>
           <p className="text-slate-500 text-xs mt-1">Track codebase assembly progress and milestone fulfillment.</p>

@@ -170,12 +170,28 @@ class ContactMessageBase(BaseModel):
 class ContactMessageCreate(ContactMessageBase):
     pass
 
+class ContactMessageUpdate(BaseModel):
+    status: str
+
 class ContactMessageResponse(ContactMessageBase):
     id: int
     status: str
     created_at: datetime
     class Config:
         from_attributes = True
+
+# Notification Schemas
+class NotificationUpdate(BaseModel):
+    read_status: bool
+
+class NotificationResponse(BaseModel):
+    id: int
+    message: str
+    read_status: bool
+    created_at: datetime
+    class Config:
+        from_attributes = True
+
 
 # QuoteRequest Schemas
 class QuoteRequestBase(BaseModel):

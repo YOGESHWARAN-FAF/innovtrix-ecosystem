@@ -8,7 +8,7 @@ export default function Settings() {
     role: 'Senior Administrator'
   })
   
-  const [backendUrl, setBackendUrl] = useState(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}`)
+  const [backendUrl, setBackendUrl] = useState(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}`)
   
   // Custom stats and founders state configuration
   const [stats, setStats] = useState([
@@ -38,12 +38,13 @@ export default function Settings() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [success, setSuccess] = useState('')
+  const [activeTab, setActiveTab] = useState('profile') // 'profile' | 'stats' | 'founders'
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings`)
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings`)
         if (response.ok) {
           const data = await response.json()
           if (data.stats) {
@@ -71,15 +72,14 @@ export default function Settings() {
     setTimeout(() => setSuccess(''), 3000)
   }
 
-  const handleCustomizationSave = async (e) => {
+  const handleStatsSave = async (e) => {
     e.preventDefault()
     setError('')
     setSuccess('')
     
     const token = localStorage.getItem('admin_token')
     try {
-      // 1. Save statistics
-      const statsRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings/stats`, {
+      const statsRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/stats`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -88,8 +88,26 @@ export default function Settings() {
         body: JSON.stringify({ value: JSON.stringify(stats) })
       })
 
-      // 2. Save founders
-      const foundersRes = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/settings/founders`, {
+      if (statsRes.ok) {
+        setSuccess('Homepage statistics saved successfully to database!')
+        setTimeout(() => setSuccess(''), 3000)
+      } else {
+        setError('Error updating statistics configuration values.')
+      }
+    } catch (err) {
+      console.error(err)
+      setError('Connection to backend failed while saving statistics.')
+    }
+  }
+
+  const handleFoundersSave = async (e) => {
+    e.preventDefault()
+    setError('')
+    setSuccess('')
+    
+    const token = localStorage.getItem('admin_token')
+    try {
+      const foundersRes = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/founders`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,15 +116,15 @@ export default function Settings() {
         body: JSON.stringify({ value: JSON.stringify(founders) })
       })
 
-      if (statsRes.ok && foundersRes.ok) {
-        setSuccess('Homepage statistics and developer socials saved successfully to database!')
+      if (foundersRes.ok) {
+        setSuccess('Developer profiles saved successfully to database!')
         setTimeout(() => setSuccess(''), 3000)
       } else {
-        setError('Error updating some configuration values.')
+        setError('Error updating developer configuration values.')
       }
     } catch (err) {
       console.error(err)
-      setError('Connection to backend failed while saving.')
+      setError('Connection to backend failed while saving developer profiles.')
     }
   }
 
@@ -138,13 +156,52 @@ export default function Settings() {
     <div className="space-y-8 font-sans max-w-4xl text-left">
       
       {/* Module Title */}
-      <div>
-        <h1 className="text-2xl font-black text-white uppercase tracking-widest">System settings & Customizer</h1>
-        <p className="text-slate-500 text-xs mt-1">Configure profile security, backend server addresses, homepage statistics, and developers profiles.</p>
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-2xl font-black text-white uppercase tracking-widest">System settings</h1>
+          <p className="text-slate-500 text-xs mt-1">Configure profile security, backend server addresses, homepage statistics, and developers profiles.</p>
+        </div>
+      </div>
+
+      {/* Tabs list */}
+      <div className="flex border-b border-white/5 space-x-2 overflow-x-auto pb-px scrollbar-none">
+        <button
+          type="button"
+          onClick={() => setActiveTab('profile')}
+          className={`px-6 py-3 text-xs font-black uppercase tracking-wider border-b-2 transition-all duration-200 cursor-pointer whitespace-nowrap ${
+            activeTab === 'profile'
+              ? 'border-brand-primary text-brand-primary bg-brand-primary/5'
+              : 'border-transparent text-slate-500 hover:text-slate-355 hover:bg-white/5'
+          }`}
+        >
+          Profile & Connection
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('stats')}
+          className={`px-6 py-3 text-xs font-black uppercase tracking-wider border-b-2 transition-all duration-200 cursor-pointer whitespace-nowrap ${
+            activeTab === 'stats'
+              ? 'border-brand-primary text-brand-primary bg-brand-primary/5'
+              : 'border-transparent text-slate-500 hover:text-slate-355 hover:bg-white/5'
+          }`}
+        >
+          Homepage Stats
+        </button>
+        <button
+          type="button"
+          onClick={() => setActiveTab('founders')}
+          className={`px-6 py-3 text-xs font-black uppercase tracking-wider border-b-2 transition-all duration-200 cursor-pointer whitespace-nowrap ${
+            activeTab === 'founders'
+              ? 'border-brand-primary text-brand-primary bg-brand-primary/5'
+              : 'border-transparent text-slate-500 hover:text-slate-355 hover:bg-white/5'
+          }`}
+        >
+          Developer Profiles
+        </button>
       </div>
 
       {success && (
-        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs rounded-xl flex items-center gap-2 font-bold uppercase tracking-wider animate-pulse">
+        <div className="p-4 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs rounded-xl flex items-center gap-2 font-bold uppercase tracking-wider">
           <FiCheck /> {success}
         </div>
       )}
@@ -157,85 +214,82 @@ export default function Settings() {
       {loading ? (
         <div className="text-slate-500 text-xs text-center py-12">Loading customize parameters from server...</div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-          
-          {/* Left Column: Admin and Connection settings */}
-          <div className="lg:col-span-1 space-y-6">
-            
-            {/* Admin Profile */}
-            <form onSubmit={handleProfileSave} className="dash-card space-y-6 bg-zinc-950/60 border border-white/5">
-              <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
-                <FiSettings className="text-brand-primary text-lg" />
-                <h3 className="text-xs font-black text-white uppercase tracking-widest">Admin Profile</h3>
-              </div>
+        <div className="space-y-6">
+          {/* Tab 1: Profile & Connection */}
+          {activeTab === 'profile' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+              {/* Admin Profile */}
+              <form onSubmit={handleProfileSave} className="dash-card space-y-6 bg-zinc-950/60 border border-white/5">
+                <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
+                  <FiSettings className="text-brand-primary text-lg" />
+                  <h3 className="text-xs font-black text-white uppercase tracking-widest">Admin Profile</h3>
+                </div>
 
-              <div className="space-y-4">
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Display Name</label>
+                    <input
+                      type="text"
+                      value={profile.name}
+                      onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                      className="dash-input"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Role Label</label>
+                    <input
+                      type="text"
+                      readOnly
+                      value={profile.role}
+                      className="dash-input opacity-60 cursor-not-allowed"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Email Address</label>
+                    <input
+                      type="email"
+                      value={profile.email}
+                      onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                      className="dash-input"
+                    />
+                  </div>
+                </div>
+
+                <button
+                  type="submit"
+                  className="btn-primary w-full py-3"
+                >
+                  <FiSave size={14} /> Save Profile
+                </button>
+              </form>
+
+              {/* Connection Settings */}
+              <div className="dash-card space-y-4 bg-zinc-950/60 border border-white/5">
+                <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
+                  <FiDatabase className="text-brand-primary text-lg" />
+                  <h3 className="text-xs font-black text-white uppercase tracking-widest">FastAPI Connection</h3>
+                </div>
+
                 <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Display Name</label>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">FastAPI Root URL</label>
                   <input
-                    type="text"
-                    value={profile.name}
-                    onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                    type="url"
+                    value={backendUrl}
+                    onChange={(e) => setBackendUrl(e.target.value)}
+                    placeholder="http://localhost:8000"
                     className="dash-input"
                   />
+                  <p className="text-[10px] text-slate-500 mt-2 font-semibold">
+                    Used by dashboard clients to synchronize invoices, messages, and projects metadata with backend.
+                  </p>
                 </div>
-                <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Role Label</label>
-                  <input
-                    type="text"
-                    readOnly
-                    value={profile.role}
-                    className="dash-input opacity-60 cursor-not-allowed"
-                  />
-                </div>
-                <div>
-                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">Email Address</label>
-                  <input
-                    type="email"
-                    value={profile.email}
-                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                    className="dash-input"
-                  />
-                </div>
-              </div>
-
-              <button
-                type="submit"
-                className="btn-primary w-full py-3"
-              >
-                <FiSave size={14} /> Save Profile
-              </button>
-            </form>
-
-            {/* Connection Settings */}
-            <div className="dash-card space-y-4 bg-zinc-950/60 border border-white/5">
-              <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
-                <FiDatabase className="text-brand-primary text-lg" />
-                <h3 className="text-xs font-black text-white uppercase tracking-widest">FastAPI Connection</h3>
-              </div>
-
-              <div>
-                <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">FastAPI Root URL</label>
-                <input
-                  type="url"
-                  value={backendUrl}
-                  onChange={(e) => setBackendUrl(e.target.value)}
-                  placeholder={import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}
-                  className="dash-input"
-                />
-                <p className="text-[10px] text-slate-500 mt-2 font-semibold">
-                  Used by dashboard clients to synchronize invoices, messages, and projects metadata with backend.
-                </p>
               </div>
             </div>
+          )}
 
-          </div>
-
-          {/* Right Column: Custom Web Customizer (Stats and Developers) */}
-          <form onSubmit={handleCustomizationSave} className="lg:col-span-2 space-y-6">
-            
-            {/* Stats section */}
-            <div className="dash-card space-y-6 bg-zinc-950/60 border border-white/5">
+          {/* Tab 2: Homepage Stats Customizer */}
+          {activeTab === 'stats' && (
+            <form onSubmit={handleStatsSave} className="dash-card space-y-6 bg-zinc-950/60 border border-white/5">
               <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
                 <FiTrendingUp className="text-brand-primary text-lg" />
                 <h3 className="text-xs font-black text-white uppercase tracking-widest">Home Statistics Customizer</h3>
@@ -245,7 +299,7 @@ export default function Settings() {
                 Configure statistics showcased on the frontend hero banner (e.g. 99.9% success, 150+ projects built).
               </p>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
                 {stats.map((stat, idx) => (
                   <div key={idx} className="p-4 bg-zinc-900/30 rounded-xl border border-white/5 space-y-3">
                     <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest">Stat Slot 0{idx + 1}</span>
@@ -276,10 +330,19 @@ export default function Settings() {
                   </div>
                 ))}
               </div>
-            </div>
 
-            {/* Developers section */}
-            <div className="dash-card space-y-6 bg-zinc-950/60 border border-white/5">
+              <button
+                type="submit"
+                className="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest mt-4"
+              >
+                <FiSave size={16} /> Save Statistics
+              </button>
+            </form>
+          )}
+
+          {/* Tab 3: Developer Profiles Customizer */}
+          {activeTab === 'founders' && (
+            <form onSubmit={handleFoundersSave} className="dash-card space-y-6 bg-zinc-950/60 border border-white/5">
               <div className="flex items-center space-x-2 border-b border-white/5 pb-4">
                 <FiUsers className="text-brand-primary text-lg" />
                 <h3 className="text-xs font-black text-white uppercase tracking-widest">Developers Profiles Customizer</h3>
@@ -289,12 +352,12 @@ export default function Settings() {
                 Customize profile details, bio statements, and social references (LinkedIn, GitHub) for co-founders.
               </p>
 
-              <div className="space-y-8 pt-2">
+              <div className="space-y-6 pt-2">
                 {founders.map((founder, idx) => (
                   <div key={idx} className="p-6 bg-zinc-900/30 rounded-xl border border-white/5 space-y-4">
                     <span className="text-[10px] font-black text-brand-primary uppercase tracking-widest">Developer 0{idx + 1} Profile</span>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">Display Name</label>
                         <input
@@ -342,7 +405,7 @@ export default function Settings() {
                       />
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 border-t border-white/5 pt-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-white/5 pt-4">
                       <div>
                         <label className="block text-[8px] font-black text-slate-400 uppercase tracking-widest mb-1">GitHub URL</label>
                         <input
@@ -377,20 +440,17 @@ export default function Settings() {
                   </div>
                 ))}
               </div>
-            </div>
 
-            <button
-              type="submit"
-              className="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest"
-            >
-              <FiSave size={16} /> Save Customizable Content
-            </button>
-
-          </form>
-
+              <button
+                type="submit"
+                className="btn-primary w-full py-4 text-xs font-black uppercase tracking-widest mt-4"
+              >
+                <FiSave size={16} /> Save Developer Profiles
+              </button>
+            </form>
+          )}
         </div>
       )}
-
     </div>
   )
 }

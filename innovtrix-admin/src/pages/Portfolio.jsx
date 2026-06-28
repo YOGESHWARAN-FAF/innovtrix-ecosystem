@@ -143,7 +143,7 @@ export default function Portfolio() {
     <div className="space-y-8 font-sans">
       
       {/* Top Header Row */}
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-2xl font-black text-white tracking-widest uppercase">Client Showcase Projects</h1>
           <p className="text-slate-500 text-xs mt-1">Manage public projects displayed in the main portfolio site showcase grids.</p>

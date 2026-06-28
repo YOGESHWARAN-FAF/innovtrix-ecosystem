@@ -239,6 +239,41 @@ def seed_database():
             db.add_all(default_portfolio)
             db.commit()
             print("Seeded default portfolio showcase projects successfully.")
+
+        # 7. Seed Contact Messages and Notifications
+        if db.query(models.ContactMessage).count() == 0:
+            m1 = models.ContactMessage(
+                name="Sanjay Gupta",
+                email="sanjay.gupta@outlook.com",
+                phone="+91 98765 43210",
+                subject="Inquiry regarding SaaS CRM application",
+                message="Hello Innovtrix Team, I am looking to build a custom CRM SaaS platform for my real estate brokerage business. Could we schedule a consultation call sometime this week? Thanks!",
+                status="Unread"
+            )
+            m2 = models.ContactMessage(
+                name="Deepa Ranganathan",
+                email="deepa.r@gmail.com",
+                phone="+91 76543 21098",
+                subject="Portfolio Showcase Question",
+                message="Loved your work on Vogue Silk Textiles portal! I would like to know the cost estimate and timeline for building a similar premium product catalog with custom invoice integrations for my wholesale retail brand. Thanks.",
+                status="Unread"
+            )
+            db.add_all([m1, m2])
+            db.commit()
+            print("Seeded default contact messages successfully.")
+
+        if db.query(models.Notification).count() == 0:
+            n1 = models.Notification(
+                message="New Message: 'Inquiry regarding SaaS CRM' from Sanjay Gupta",
+                read_status=False
+            )
+            n2 = models.Notification(
+                message="New Lead: E-Commerce Development inquiry from Deepa Ranganathan",
+                read_status=False
+            )
+            db.add_all([n1, n2])
+            db.commit()
+            print("Seeded default notifications successfully.")
             
     except Exception as e:
         print(f"Error seeding DB: {e}")
@@ -273,6 +308,15 @@ def create_quote_request(quote: schemas.QuoteRequestCreate, db: Session = Depend
     db.add(db_quote)
     db.commit()
     db.refresh(db_quote)
+    
+    # Create dynamic notification in DB
+    db_notif = models.Notification(
+        message=f"New Lead: {db_quote.service_type} inquiry from {db_quote.name}",
+        read_status=False
+    )
+    db.add(db_notif)
+    db.commit()
+    
     return db_quote
 
 @app.get("/api/quotes", response_model=List[schemas.QuoteRequestResponse])
@@ -304,11 +348,30 @@ def create_contact_message(msg: schemas.ContactMessageCreate, db: Session = Depe
     db.add(db_msg)
     db.commit()
     db.refresh(db_msg)
+    
+    # Create dynamic notification in DB
+    db_notif = models.Notification(
+        message=f"New Message: '{db_msg.subject}' from {db_msg.name}",
+        read_status=False
+    )
+    db.add(db_notif)
+    db.commit()
+    
     return db_msg
 
 @app.get("/api/contact", response_model=List[schemas.ContactMessageResponse])
 def get_all_contact_messages(current_admin: models.Admin = Depends(auth.get_current_admin), db: Session = Depends(database.get_db)):
     return db.query(models.ContactMessage).order_by(models.ContactMessage.created_at.desc()).all()
+
+@app.put("/api/contact/{contact_id}", response_model=schemas.ContactMessageResponse)
+def update_contact_message(contact_id: int, msg_update: schemas.ContactMessageUpdate, current_admin: models.Admin = Depends(auth.get_current_admin), db: Session = Depends(database.get_db)):
+    db_msg = db.query(models.ContactMessage).filter(models.ContactMessage.id == contact_id).first()
+    if not db_msg:
+        raise HTTPException(status_code=404, detail="Contact message not found")
+    db_msg.status = msg_update.status
+    db.commit()
+    db.refresh(db_msg)
+    return db_msg
 
 
 # ==========================================
@@ -577,4 +640,48 @@ def update_setting(
     db.commit()
     db.refresh(setting)
     return setting
+
+
+# ==========================================
+# NOTIFICATIONS ENDPOINTS
+# ==========================================
+
+@app.get("/api/notifications", response_model=List[schemas.NotificationResponse])
+def get_all_notifications(current_admin: models.Admin = Depends(auth.get_current_admin), db: Session = Depends(database.get_db)):
+    return db.query(models.Notification).order_by(models.Notification.created_at.desc()).all()
+
+@app.put("/api/notifications/read-all")
+def mark_all_notifications_as_read(current_admin: models.Admin = Depends(auth.get_current_admin), db: Session = Depends(database.get_db)):
+    db.query(models.Notification).update({models.Notification.read_status: True})
+    db.commit()
+    return {"detail": "All notifications marked as read"}
+
+@app.put("/api/notifications/{notification_id}", response_model=schemas.NotificationResponse)
+def update_notification_status(
+    notification_id: int,
+    notif_update: schemas.NotificationUpdate,
+    current_admin: models.Admin = Depends(auth.get_current_admin),
+    db: Session = Depends(database.get_db)
+):
+    db_notif = db.query(models.Notification).filter(models.Notification.id == notification_id).first()
+    if not db_notif:
+        raise HTTPException(status_code=404, detail="Notification not found")
+    db_notif.read_status = notif_update.read_status
+    db.commit()
+    db.refresh(db_notif)
+    return db_notif
+
+@app.delete("/api/notifications/{notification_id}")
+def delete_notification(
+    notification_id: int,
+    current_admin: models.Admin = Depends(auth.get_current_admin),
+    db: Session = Depends(database.get_db)
+):
+    db_notif = db.query(models.Notification).filter(models.Notification.id == notification_id).first()
+    if not db_notif:
+        raise HTTPException(status_code=404, detail="Notification not found")
+    db.delete(db_notif)
+    db.commit()
+    return {"detail": "Notification deleted successfully"}
+
 

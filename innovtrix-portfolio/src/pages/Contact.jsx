@@ -55,7 +55,7 @@ export default function Contact() {
     setErrorMsg('')
     
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/quotes`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL || 'https://innovtrix-ecosystem-q8hn.vercel.app'}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -64,11 +64,8 @@ export default function Contact() {
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          company: formData.company_name,
-          business_type: formData.business_type,
-          service_type: formData.service_type,
-          budget: formData.budget,
-          details: `Subject: ${formData.subject}\nMessage: ${formData.message}`
+          subject: formData.subject || 'Web Development Inquiry',
+          message: `Company: ${formData.company_name || 'N/A'}\nBusiness Sector: ${formData.business_type}\nService Required: ${formData.service_type}\nEstimated Budget: ${formData.budget}\n\nMessage:\n${formData.message}`
         }),
       })
       
