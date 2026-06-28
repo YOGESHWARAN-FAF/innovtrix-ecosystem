@@ -15,6 +15,7 @@ import Invoices from './pages/Invoices'
 import Payments from './pages/Payments'
 import Messages from './pages/Messages'
 import Settings from './pages/Settings'
+import Portfolio from './pages/Portfolio'
 
 export default function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
@@ -78,6 +79,7 @@ export default function App() {
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/payments" element={<Payments />} />
               <Route path="/messages" element={<Messages />} />
+              <Route path="/portfolio" element={<Portfolio />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

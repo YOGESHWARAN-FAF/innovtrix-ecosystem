@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { FiTarget, FiActivity, FiUsers, FiAward, FiGithub, FiLinkedin, FiMail } from 'react-icons/fi'
 
@@ -29,7 +30,7 @@ export default function About() {
     }
   ]
 
-  const founders = [
+  const [founders, setFounders] = useState([
     {
       name: 'Yogeshwaran M',
       role: 'DevOps Specialist / Co-Founder',
@@ -60,7 +61,38 @@ export default function About() {
       rotation: 'rotate-3',
       hoverRotation: 'hover:rotate-0'
     }
-  ]
+  ])
+
+  useEffect(() => {
+    const fetchFounders = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/founders`)
+        if (response.ok) {
+          const data = await response.json()
+          if (data && data.value) {
+            const parsed = JSON.parse(data.value)
+            setFounders(prev => prev.map((f, index) => {
+              if (parsed[index]) {
+                return {
+                  ...f,
+                  name: parsed[index].name || f.name,
+                  role: parsed[index].role || f.role,
+                  bio: parsed[index].bio || f.bio,
+                  image: parsed[index].image || f.image,
+                  socials: parsed[index].socials || f.socials,
+                  skills: parsed[index].skills || f.skills
+                }
+              }
+              return f
+            }))
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to query developer profiles from backend, displaying defaults.', err)
+      }
+    }
+    fetchFounders()
+  }, [])
 
   return (
     <div className="font-sans bg-[#050505] text-zinc-100 min-h-screen bg-grid-pattern">

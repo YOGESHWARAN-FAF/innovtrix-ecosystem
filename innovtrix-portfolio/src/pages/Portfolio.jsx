@@ -1,12 +1,14 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { FiArrowRight } from 'react-icons/fi'
 
 export default function Portfolio() {
   const [filter, setFilter] = useState('All')
   const navigate = useNavigate()
+  const [projects, setProjects] = useState([])
+  const [loading, setLoading] = useState(true)
 
-  const projects = [
+  const defaultProjects = [
     {
       title: 'Vogue Silk Textiles',
       category: 'E-Commerce Storefront',
@@ -58,6 +60,37 @@ export default function Portfolio() {
       desc: 'Portal built for wholesale B2B buyers with login restrictions, custom tier pricing structure, and bulk invoice automation.'
     }
   ]
+
+  useEffect(() => {
+    const loadProjects = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/portfolio`)
+        if (response.ok) {
+          const data = await response.json()
+          if (data && data.length > 0) {
+            setProjects(data.map(p => ({
+              title: p.title,
+              category: p.category,
+              type: p.type || 'E-Commerce',
+              image: p.image_url || 'https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop',
+              desc: p.description || '',
+              link: p.project_url || ''
+            })))
+          } else {
+            setProjects(defaultProjects)
+          }
+        } else {
+          setProjects(defaultProjects)
+        }
+      } catch (err) {
+        console.warn('Backend portfolio query offline, falling back to local list.', err)
+        setProjects(defaultProjects)
+      } finally {
+        setLoading(false)
+      }
+    }
+    loadProjects()
+  }, [])
 
   const filterCategories = ['All', 'E-Commerce', 'Corporate', 'Landing Pages', 'Product Catalog', 'Wholesale']
 

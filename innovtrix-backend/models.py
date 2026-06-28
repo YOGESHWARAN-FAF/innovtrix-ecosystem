@@ -63,10 +63,17 @@ class Portfolio(Base):
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String(255), nullable=False)
     category = Column(String(150), nullable=False)
+    type = Column(String(100), nullable=True)
     image_url = Column(String(500), nullable=True)
     project_url = Column(String(500), nullable=True)
     description = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+class SystemSetting(Base):
+    __tablename__ = "system_settings"
+    key = Column(String(255), primary_key=True, index=True)
+    value = Column(Text, nullable=False)
+
 
 class Testimonial(Base):
     __tablename__ = "testimonials"

@@ -216,6 +216,13 @@ export default function Home() {
     }
   ]
 
+  const [stats, setStats] = useState([
+    { value: '150+', label: 'Websites Built' },
+    { value: '99.9%', label: 'Uptime Guaranteed' },
+    { value: '18+', label: 'Industries Served' },
+    { value: '24/7', label: 'Tech Support' }
+  ])
+
   useEffect(() => {
     gsap.fromTo('.hero-title', 
       { opacity: 0, y: 30 }, 
@@ -229,14 +236,22 @@ export default function Home() {
       { opacity: 0, y: 15 }, 
       { opacity: 1, y: 0, duration: 1.2, ease: 'power4.out', delay: 0.6 }
     )
-  }, [])
 
-  const stats = [
-    { value: '150+', label: 'Websites Built' },
-    { value: '99.9%', label: 'Uptime Guaranteed' },
-    { value: '18+', label: 'Industries Served' },
-    { value: '24/7', label: 'Tech Support' }
-  ]
+    const fetchStats = async () => {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_URL || 'http://localhost:8000'}/api/settings/stats`)
+        if (response.ok) {
+          const data = await response.json()
+          if (data && data.value) {
+            setStats(JSON.parse(data.value))
+          }
+        }
+      } catch (err) {
+        console.warn('Failed to query statistics setting from backend, displaying defaults.', err)
+      }
+    }
+    fetchStats()
+  }, [])
 
   const coreServices = [
     {

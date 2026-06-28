@@ -122,6 +122,119 @@ def seed_database():
             )
             db.add_all([p1, p2])
             db.commit()
+
+        # 5. Seed SystemSettings (stats & founders)
+        stats_setting = db.query(models.SystemSetting).filter(models.SystemSetting.key == "stats").first()
+        if not stats_setting:
+            default_stats = [
+                { "value": "150+", "label": "Websites Built" },
+                { "value": "99.9%", "label": "Uptime Guaranteed" },
+                { "value": "18+", "label": "Industries Served" },
+                { "value": "24/7", "label": "Tech Support" }
+            ]
+            db_stats = models.SystemSetting(key="stats", value=json.dumps(default_stats))
+            db.add(db_stats)
+            db.commit()
+            print("Seeded default stats setting successfully.")
+
+        founders_setting = db.query(models.SystemSetting).filter(models.SystemSetting.key == "founders").first()
+        if not founders_setting:
+            default_founders = [
+                {
+                    "name": "Yogeshwaran M",
+                    "role": "DevOps Specialist / Co-Founder",
+                    "badgeRole": "DEVOPS / SEC",
+                    "bio": "Expert in AWS, CI/CD orchestration, Terraform, Docker, and Linux administration. Engineers scalable, automated cloud architecture with high-security guardrails.",
+                    "image": "",
+                    "socials": {
+                        "github": "https://github.com/YOGESHWARAN-FAF",
+                        "linkedin": "#",
+                        "email": "mailto:innovtrix30@gmail.com"
+                    },
+                    "skills": ["AWS", "Docker", "Terraform", "Linux", "CI/CD", "Nginx"]
+                },
+                {
+                    "name": "Prashanth S",
+                    "role": "Full Stack Developer / Co-Founder",
+                    "badgeRole": "DEV / FULLSTACK",
+                    "bio": "Specialist in modern web rendering frameworks, Python/FastAPI servers, responsive UI designs, and database performance optimizations.",
+                    "image": "",
+                    "socials": {
+                        "github": "#",
+                        "linkedin": "#",
+                        "email": "mailto:innovtrix30@gmail.com"
+                    },
+                    "skills": ["React", "Node.js", "FastAPI", "MySQL", "Tailwind", "Git"]
+                }
+            ]
+            db_founders = models.SystemSetting(key="founders", value=json.dumps(default_founders))
+            db.add(db_founders)
+            db.commit()
+            print("Seeded default founders setting successfully.")
+
+        # 6. Seed Portfolio showcase projects
+        if db.query(models.Portfolio).count() == 0:
+            default_portfolio = [
+                models.Portfolio(
+                    title="Vogue Silk Textiles",
+                    category="E-Commerce Storefront",
+                    type="E-Commerce",
+                    image_url="https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=600&auto=format&fit=crop",
+                    description="Enterprise-grade catalog and retail store custom designed for a high-fashion textile exporter.",
+                    project_url="https://ps-tex-production.up.railway.app"
+                ),
+                models.Portfolio(
+                    title="Aura Fine Jewellery",
+                    category="Online Shopping Websites",
+                    type="E-Commerce",
+                    image_url="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=600&auto=format&fit=crop",
+                    description="Elegant high-conversion digital boutique featuring Stripe checkout, inventory management, and 3D preview mockups.",
+                    project_url=""
+                ),
+                models.Portfolio(
+                    title="Apex Construction Group",
+                    category="Corporate Websites",
+                    type="Corporate",
+                    image_url="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=600&auto=format&fit=crop",
+                    description="Premium commercial website showing heavy industrial portfolios, active projects tracker, and bids portal.",
+                    project_url=""
+                ),
+                models.Portfolio(
+                    title="Lumina Electronics Hub",
+                    category="Modern E-Commerce Websites",
+                    type="E-Commerce",
+                    image_url="https://images.unsplash.com/photo-1498049794561-7780e7231661?q=80&w=600&auto=format&fit=crop",
+                    description="High-speed retail store built with fast search query processing for thousands of electronic items.",
+                    project_url=""
+                ),
+                models.Portfolio(
+                    title="Verdant Real Estate",
+                    category="Landing Pages",
+                    type="Landing Pages",
+                    image_url="https://images.unsplash.com/photo-1564013799919-ab600027ffc6?q=80&w=600&auto=format&fit=crop",
+                    description="Single-page landing page featuring dynamic properties galleries, contact forms, and booking triggers.",
+                    project_url=""
+                ),
+                models.Portfolio(
+                    title="Apex Furniture Showroom",
+                    category="Product Catalog Websites",
+                    type="Product Catalog",
+                    image_url="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=600&auto=format&fit=crop",
+                    description="Premium interactive catalog with customization configuration parameters and quotation builder tools.",
+                    project_url=""
+                ),
+                models.Portfolio(
+                    title="Zenith Wholesale Emporium",
+                    category="Wholesale Business Websites",
+                    type="Wholesale",
+                    image_url="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?q=80&w=600&auto=format&fit=crop",
+                    description="Portal built for wholesale B2B buyers with login restrictions, custom tier pricing structure, and bulk invoice automation.",
+                    project_url=""
+                )
+            ]
+            db.add_all(default_portfolio)
+            db.commit()
+            print("Seeded default portfolio showcase projects successfully.")
             
     except Exception as e:
         print(f"Error seeding DB: {e}")
@@ -375,3 +488,89 @@ def delete_order(order_id: int, current_admin: models.Admin = Depends(auth.get_c
     db.delete(db_order)
     db.commit()
     return {"detail": "Order deleted successfully"}
+
+# ==========================================
+# PORTFOLIO SHOWCASE ENDPOINTS
+# ==========================================
+
+@app.get("/api/portfolio", response_model=List[schemas.PortfolioResponse])
+def read_all_portfolio(db: Session = Depends(database.get_db)):
+    return db.query(models.Portfolio).all()
+
+@app.post("/api/portfolio", response_model=schemas.PortfolioResponse)
+def create_portfolio_item(
+    item: schemas.PortfolioCreate,
+    current_admin: models.Admin = Depends(auth.get_current_admin),
+    db: Session = Depends(database.get_db)
+):
+    db_item = models.Portfolio(**item.dict())
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+@app.put("/api/portfolio/{portfolio_id}", response_model=schemas.PortfolioResponse)
+def update_portfolio_item(
+    portfolio_id: int,
+    item_update: schemas.PortfolioUpdate,
+    current_admin: models.Admin = Depends(auth.get_current_admin),
+    db: Session = Depends(database.get_db)
+):
+    db_item = db.query(models.Portfolio).filter(models.Portfolio.id == portfolio_id).first()
+    if not db_item:
+        raise HTTPException(status_code=404, detail="Portfolio item not found")
+    
+    for key, value in item_update.dict(exclude_unset=True).items():
+        setattr(db_item, key, value)
+        
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+@app.delete("/api/portfolio/{portfolio_id}")
+def delete_portfolio_item(
+    portfolio_id: int,
+    current_admin: models.Admin = Depends(auth.get_current_admin),
+    db: Session = Depends(database.get_db)
+):
+    db_item = db.query(models.Portfolio).filter(models.Portfolio.id == portfolio_id).first()
+    if not db_item:
+        raise HTTPException(status_code=404, detail="Portfolio item not found")
+    db.delete(db_item)
+    db.commit()
+    return {"detail": "Portfolio item deleted successfully"}
+
+# ==========================================
+# SYSTEM SETTINGS ENDPOINTS
+# ==========================================
+
+@app.get("/api/settings")
+def get_all_settings(db: Session = Depends(database.get_db)):
+    settings = db.query(models.SystemSetting).all()
+    return {s.key: s.value for s in settings}
+
+@app.get("/api/settings/{key}", response_model=schemas.SystemSettingResponse)
+def get_setting_by_key(key: str, db: Session = Depends(database.get_db)):
+    setting = db.query(models.SystemSetting).filter(models.SystemSetting.key == key).first()
+    if not setting:
+        raise HTTPException(status_code=404, detail="Setting not found")
+    return setting
+
+@app.put("/api/settings/{key}", response_model=schemas.SystemSettingResponse)
+def update_setting(
+    key: str,
+    setting_update: schemas.SystemSettingUpdate,
+    current_admin: models.Admin = Depends(auth.get_current_admin),
+    db: Session = Depends(database.get_db)
+):
+    setting = db.query(models.SystemSetting).filter(models.SystemSetting.key == key).first()
+    if not setting:
+        setting = models.SystemSetting(key=key, value=setting_update.value)
+        db.add(setting)
+    else:
+        setting.value = setting_update.value
+        
+    db.commit()
+    db.refresh(setting)
+    return setting
+

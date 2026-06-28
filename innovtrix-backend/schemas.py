@@ -103,6 +103,7 @@ class ServiceResponse(ServiceBase):
 class PortfolioBase(BaseModel):
     title: str
     category: str
+    type: Optional[str] = None
     image_url: Optional[str] = None
     project_url: Optional[str] = None
     description: Optional[str] = None
@@ -110,11 +111,35 @@ class PortfolioBase(BaseModel):
 class PortfolioCreate(PortfolioBase):
     pass
 
+class PortfolioUpdate(BaseModel):
+    title: Optional[str] = None
+    category: Optional[str] = None
+    type: Optional[str] = None
+    image_url: Optional[str] = None
+    project_url: Optional[str] = None
+    description: Optional[str] = None
+
 class PortfolioResponse(PortfolioBase):
     id: int
     created_at: datetime
     class Config:
         from_attributes = True
+
+# System Settings Schemas
+class SystemSettingBase(BaseModel):
+    key: str
+    value: str
+
+class SystemSettingCreate(SystemSettingBase):
+    pass
+
+class SystemSettingUpdate(BaseModel):
+    value: str
+
+class SystemSettingResponse(SystemSettingBase):
+    class Config:
+        from_attributes = True
+
 
 # Testimonial Schemas
 class TestimonialBase(BaseModel):
