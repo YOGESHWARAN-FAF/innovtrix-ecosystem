@@ -25,6 +25,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+def read_root():
+    return {
+        "status": "online",
+        "service": "Innovtrix Corporate API Ecosystem",
+        "version": "1.0.0",
+        "documentation": "/docs"
+    }
+
 # Startup Seeding Routine
 @app.on_event("startup")
 def seed_database():
